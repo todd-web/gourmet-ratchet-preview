@@ -82,6 +82,11 @@ html.map .sec::before{content:attr(data-shopify);position:absolute;z-index:30;to
 .hero .meta{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;opacity:.92}
 @media (max-width:760px){.hero{grid-template-columns:1fr}.hero a{min-height:420px}}
 
+.lhero{background:var(--ink);color:var(--bone);min-height:clamp(420px,72vh,760px);display:grid;place-items:center;align-content:center;gap:clamp(28px,5vw,48px);padding:64px var(--gutter);border-bottom:1px solid var(--ink)}
+.lhero>img{width:min(760px,84vw)}
+.lhero-cta{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.lhero .pill{text-decoration:none;background:var(--bone);color:var(--ink);border-color:var(--bone)}
+.lhero .pill.cbp{background:var(--cobalt);color:#fff;border-color:var(--cobalt)}
 /* statement + print detail */
 .statement{padding-block:clamp(48px,7vw,96px);border-bottom:1px solid var(--ink)}
 .statement .grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(24px,4vw,64px);align-items:end}
@@ -377,15 +382,9 @@ function signup(){
 function home(){
   return `
   <h1 class="sr">Gourmet Ratchet: the OG Drop and the Exclusive</h1>
-  <section class="hero sec" data-shopify="Custom section: split hero (or two Image banners side by side)">
-    <a class="og" href="#og"><img class="ph" src="${IMG('look-og-tee-black-back')}" alt="OG Tee in black, back print">
-      <div class="shade"></div>
-      <div class="cap">
-        <div class="row"><span class="meta">OG Drop / the main mark / 4 pieces</span><span class="pill">Shop the OG Drop</span></div></div></a>
-    <a class="ex" href="#exclusive"><img class="ph" src="${IMG('look-ex-tee-navy-back')}" alt="Exclusive Tee in deep navy, back print">
-      <div class="shade"></div>
-      <div class="cap"><span class="chip cb" style="justify-self:start">Limited drop</span>
-        <div class="row"><span class="meta">Exclusive / graffiti over script / limited</span><span class="pill">Shop the Exclusive</span></div></div></a>
+  <section class="lhero sec" data-shopify="Image banner: logo only (color scheme: Ink)">
+    <img src="img/logo-og-bone.png" alt="Gourmet Ratchet">
+    <div class="lhero-cta"><a class="pill" href="#og">Shop the OG Drop</a><a class="pill cbp" href="#exclusive">Shop the Exclusive</a></div>
   </section>
 
   <section class="statement sec" data-shopify="Image with text, or Collage (3 print-detail images + rich text)"><div class="wrap grid">
