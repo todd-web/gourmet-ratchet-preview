@@ -647,7 +647,6 @@ function route(){
 function bindForms(){document.querySelectorAll('.js-sign').forEach(f=>f.onsubmit=e=>{e.preventDefault();const ok=f.parentElement.querySelector('.ok');if(ok)ok.hidden=false;f.reset();});}
 window.addEventListener('hashchange',route);
 document.getElementById('bag-btn').onclick=openBag;
-document.getElementById('go-soon').onclick=()=>{location.hash='soon';};
 document.getElementById('menu-btn').onclick=e=>{const n=document.getElementById('nav');n.classList.toggle('open');e.currentTarget.setAttribute('aria-expanded',n.classList.contains('open'));};
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeBag();});
 route();
