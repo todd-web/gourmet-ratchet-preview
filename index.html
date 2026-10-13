@@ -271,9 +271,8 @@ footer.site li a{display:inline-block;padding-block:4px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 
-<div class="proto"><div class="wrap"><span>Design prototype for gourmetratchet.com. Prices, sizes, fit, fabric and edition counts are placeholders until Marcos and Chris confirm. Dashed blue chips mark open items. Product shots are AI-rebuilt flat lays from the tech pack; real sample photos replace them when Tapstitch samples land.</span><span style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" id="go-soon">View coming-soon page</button></span></div></div>
 <div id="chrome">
-<div class="ann sec" data-shopify="Announcement bar">Every piece is printed to order and ships in 2 to 4 business days, plus transit. <span class="tok" style="color:#9fb0ff;border-color:#9fb0ff">Exclusive fulfillment: confirm</span></div>
+<div class="ann sec" data-shopify="Announcement bar">Every piece is printed to order and ships in 2 to 4 business days, plus transit.</div>
 <header class="site sec" data-shopify="Header (sticky, logo center on mobile)">
   <div class="wrap">
     <button class="menu-btn" type="button" id="menu-btn" aria-expanded="false" aria-controls="nav">Menu</button>
@@ -290,11 +289,10 @@ footer.site li a{display:inline-block;padding-block:4px}
 <main id="view"></main>
 <div id="footwrap"></div>
 <div id="drawer-root"></div>
-<button class="maptoggle" type="button" id="maptoggle" aria-pressed="false">Show Shopify sections</button>
 
 <script>
 const IMG = n => `img/${n}.jpg`;
-const tok = s => s.replace(/\{\{([^}]+)\}\}/g,(m,t)=>`<span class="tok">${t.trim()}</span>`);
+const tok = s => s.replace(/\{\{([^}]+)\}\}/g,()=>'');
 const money = n => `$${n}`;
 const SIZES = ['S','M','L','XL','2XL','3XL'];
 const JSIZES = ['S','M','L','XL','2XL'];
@@ -317,7 +315,7 @@ const P = [
  {h:'og-crew-grey',line:'og',type:'Crewnecks',name:'OG Crewneck',color:'Faded Grey',code:'GR-CN-01',price:70,img:'og-crew-grey',place:'tee',sizes:SIZES,
   hook:'A faded gray crew with the wordmark on the front and the back.',
   desc:'A faded gray crewneck carrying the Gourmet Ratchet block wordmark, two lines stacked tight and never stretched out. There\'s a small hit on the wearer\'s left chest and a full hit across the back, and the print comes matte and already aged, with fine cracking along the fold lines.',
-  ink:'{{Front ink black, back bone on the mock: confirm with Chris}}',front:'Left-chest hit, wearer\'s left',back:'Full hit, centered',care:CARE_TOP,detail:2},
+  ink:'Black front, bone back',front:'Left-chest hit, wearer\'s left',back:'Full hit, centered',care:CARE_TOP,detail:2},
  {h:'og-hoodie-charcoal',line:'og',type:'Hoodies',name:'OG Hoodie',color:'Washed Charcoal',code:'GR-HD-01',price:85,img:'og-hoodie-charcoal',place:'tee',sizes:SIZES,vary:true,
   hook:'Acid-washed charcoal, so yours won\'t look like anybody else\'s.',
   desc:'Washed charcoal hoodie with the block wordmark in bone, small on the left chest and full across the back. The acid wash leaves the body mottled and faded, and the print goes with it, matte with cracks along the fold and wear lines, so it shows up looking like it\'s been in your rotation for a couple of years.',
@@ -357,10 +355,10 @@ function footer(){
   return `<footer class="site sec" data-shopify="Footer">
   <div class="wrap">
     <div class="cols">
-      <div><img src="img/logo-og-bone.png" alt="Gourmet Ratchet" style="width:150px"><p class="muted" style="max-width:34ch;margin-top:16px;font-size:14px">Printed to order. Matte print, cracked on purpose. <span class="tok" style="color:#9fb0ff;border-color:#9fb0ff">Exclusive fulfillment: confirm</span></p></div>
+      <div><img src="img/logo-og-bone.png" alt="Gourmet Ratchet" style="width:150px"><p class="muted" style="max-width:34ch;margin-top:16px;font-size:14px">Printed to order. Matte print, cracked on purpose.</p></div>
       <div><h4>Shop</h4><ul><li><a href="#og">OG Drop</a></li><li><a href="#exclusive">Exclusive</a></li></ul></div>
-      <div><h4>Help</h4><ul><li><a href="#shipping">Shipping and Returns</a></li><li><a href="#size">Size Guide</a></li><li><a href="#faq">FAQ</a></li><li><span class="tok">contact email</span></li></ul></div>
-      <div><h4>Brand</h4><ul><li><a href="#about">About</a></li><li><a href="https://www.instagram.com/gourmetratchet/" target="_blank" rel="noopener">Instagram @gourmetratchet</a></li><li><span class="tok">Facebook URL</span></li></ul></div>
+      <div><h4>Help</h4><ul><li><a href="#shipping">Shipping and Returns</a></li><li><a href="#faq">FAQ</a></li></ul></div>
+      <div><h4>Brand</h4><ul><li><a href="#about">About</a></li><li><a href="https://www.instagram.com/gourmetratchet/" target="_blank" rel="noopener">Instagram @gourmetratchet</a></li></ul></div>
     </div>
     <div class="bot"><span>&copy; 2026 Gourmet Ratchet</span><span>Privacy / Terms / Refund policy</span></div>
   </div></footer>`;
@@ -372,8 +370,8 @@ function signup(){
     <h2 class="disp">Get the drop alert.</h2>
     <p class="muted" style="max-width:44ch;margin:16px auto 0">We'll email you when a new drop goes live, so you hear about it before it's gone.</p>
     <form class="js-sign"><label class="mono" for="email-home" style="position:absolute;left:-9999px">Email</label><input id="email-home" type="email" placeholder="Email address" required><button class="btn" type="submit">Get Drop Alerts</button></form>
-    <p class="ok" hidden>You're on the list. (Prototype: nothing was submitted.)</p>
-    <p class="mono muted" style="margin-top:14px"><span class="tok">email frequency and privacy link</span></p>
+    <p class="ok" hidden>You're on the list.</p>
+    
   </div></section>`;
 }
 
@@ -388,14 +386,14 @@ function home(){
     <a class="ex" href="#exclusive"><img class="ph" src="${IMG('look-ex-tee-navy-back')}" alt="Exclusive Tee in deep navy, back print">
       <div class="shade"></div>
       <div class="cap"><span class="chip cb" style="justify-self:start">Limited drop</span>
-        <div class="row"><span class="meta">Exclusive / graffiti over script / <span class="tok">edition size</span></span><span class="pill">Shop the Exclusive</span></div></div></a>
+        <div class="row"><span class="meta">Exclusive / graffiti over script / limited</span><span class="pill">Shop the Exclusive</span></div></div></a>
   </section>
 
   <section class="statement sec" data-shopify="Image with text, or Collage (3 print-detail images + rich text)"><div class="wrap grid">
     <div>
       <p class="mono muted">The new season</p>
       <h2 class="disp" style="margin-top:14px">Matte print. Cracked on purpose.</h2>
-      <p class="muted">Two marks, eight pieces, and every one gets printed when you order it. The finish is matte, with hairline cracks along the fold and wear lines. <span class="tok">Exclusive fulfillment: confirm</span></p>
+      <p class="muted">Two marks, eight pieces, and every one gets printed when you order it. The finish is matte, with hairline cracks along the fold and wear lines.</p>
       <div class="specline mono muted"><span>Bone ink on dark bodies</span><span>Black ink on gray and bone</span><span>Cobalt on the Exclusive</span></div>
     </div>
     <div class="details">
@@ -412,7 +410,7 @@ function home(){
 
   <section class="band ex dark sec" data-shopify="Featured collection: Exclusive (color scheme: Ink)"><div class="wrap">
     <div class="shead"><div><p class="mono muted">Section 02</p><img class="exmark" src="img/logo-exclusive-dark.png" alt="Gourmet Ratchet Exclusive mark" style="margin-top:10px">
-      <div class="chips"><span class="chip cb">Limited drop</span><span class="chip">Edition: <span class="tok">size</span></span><span class="chip">Tee in 4 colors</span></div>
+      <div class="chips"><span class="chip cb">Limited drop</span><span class="chip">Tee in 4 colors</span></div>
       <p class="muted" style="margin-top:14px">Spray graffiti over copperplate script, three sparkle stars, and cobalt wherever the body can carry it.</p></div>
       <a class="more" href="#exclusive">Shop the Exclusive</a></div>
     <div class="rail">${EX.map(p=>card(p,true)).join('')}</div>
@@ -425,7 +423,7 @@ function collection(line){
   const ex = line==='ex', list = ex?EX:OG;
   const types = ['All',...new Set(list.map(p=>p.type))];
   const intro = ex
-    ? 'The Exclusive puts "Gourmet" in spray graffiti, drips and all, over "Ratchet" in copperplate script, with exactly three sparkle stars. Cobalt shows up wherever the body can carry it, and the navy pieces go all bone. Edition size is {{edition size}}.'
+    ? 'The Exclusive puts "Gourmet" in spray graffiti, drips and all, over "Ratchet" in copperplate script, with exactly three sparkle stars. Cobalt shows up wherever the body can carry it, and the navy pieces go all bone.'
     : 'The OG Drop runs the main Gourmet Ratchet wordmark, two lines, stacked flush, never stretched. Four pieces: a tee, a muscle tee, a faded gray crew and an acid-washed charcoal hoodie. Every piece is printed when you order it.';
   return `<div class="${ex?'dark ex-page':''}">
   <section class="colhead sec" data-shopify="Collection banner" style="${ex?'border-color:var(--bone)':''}"><div class="wrap">
@@ -472,32 +470,31 @@ function pdp(h){
     : 'Front: chest hit at 24% of body width, wearer\'s left, top 32% down. Back: full hit at 46% of body width, centered, top 20% down.';
   const html = `
   <section class="sec" data-shopify="Main product (gallery left, buy box right)"><div class="wrap pdp">
-    <div class="mhead"><div class="crumb mono muted"><a href="#${p.line==='og'?'og':'exclusive'}">${p.line==='og'?'OG Drop':'Exclusive'}</a><span>/</span><span>${p.code}</span></div><h1 class="disp" style="font-size:44px">${p.name}</h1><div class="price"><span>${money(p.price)}</span><span class="mono muted">Placeholder price</span></div></div>
+    <div class="mhead"><div class="crumb mono muted"><a href="#${p.line==='og'?'og':'exclusive'}">${p.line==='og'?'OG Drop':'Exclusive'}</a><span>/</span><span>${p.code}</span></div><h1 class="disp" style="font-size:44px">${p.name}</h1><div class="price"><span>${money(p.price)}</span></div></div>
     <div class="gallery" id="gal"></div>
     <div class="info">
       <div class="crumb mono muted"><a href="#${p.line==='og'?'og':'exclusive'}">${p.line==='og'?'OG Drop':'Exclusive'}</a><span>/</span><span>${p.code}</span></div>
       <h1 class="disp">${p.name}</h1>
-      <div class="price"><span>${money(p.price)}</span>${p.line==='ex'?'<span class="chip cb">Limited drop</span>':''}<span class="mono muted">Placeholder price</span></div>
+      <div class="price"><span>${money(p.price)}</span>${p.line==='ex'?'<span class="chip cb">Limited drop</span>':''}</div>
       <p class="hook">${p.hook}</p>
       ${p.colors?`<div class="opt"><div class="lbl"><span class="mono">Color: <b id="cname">${state.color.n}</b></span><span class="mono muted" id="cink">${state.color.ink}</span></div>
         <div class="swatches" role="group" aria-label="Color">${p.colors.map((c,i)=>`<button type="button" data-c="${i}" aria-pressed="${i===0}"><i style="background:${SW[c.n]}"></i>${c.n}</button>`).join('')}</div></div>`
        :`<div class="opt"><div class="lbl"><span class="mono">Color: <b>${p.color}</b></span><span class="mono muted">${tok(p.ink)}</span></div></div>`}
-      <div class="opt"><div class="lbl"><span class="mono">Size</span><a href="#size">Size guide</a></div>
-        <div class="sizes" role="group" aria-label="Size">${p.sizes.map(s=>`<button type="button" data-s="${s}" aria-pressed="false">${s}</button>`).join('')}</div>
-        <span class="mono muted">Size run is a placeholder: <span class="tok">confirm from Tapstitch blank</span></span></div>
+      <div class="opt"><div class="lbl"><span class="mono">Size</span></div>
+        <div class="sizes" role="group" aria-label="Size">${p.sizes.map(s=>`<button type="button" data-s="${s}" aria-pressed="false">${s}</button>`).join('')}</div></div>
       <button class="btn add" type="button" id="add">Select a size</button>
       <div class="mto"><span class="k">Made to order</span><span>Printed in 2 to 4 business days after you order, then shipped with tracking.</span>
-        ${p.line==='ex'?`<span class="k">Edition</span><span>Limited run of <span class="tok">edition size</span></span><span class="k">Note</span><span><span class="tok">Exclusive fulfillment: made to order or pre-made run, confirm</span></span>`:''}</div>
+        </div>
       ${p.vary?`<div class="vary"><b>Variance expected.</b> ${VARY}</div>`:''}
       <div>
         <details class="acc" open><summary>Description</summary><div class="body"><p style="margin:0">${tok(p.desc)}</p></div></details>
         <details class="acc"><summary>Print and placement</summary><div class="body">
-          <p style="margin:0 0 10px">${placeTxt} Discharge-style finish, matte, aged crack distress. <span class="tok">fulfilled by Tapstitch (Chris confirmed); verify finish on samples</span></p>
+          <p style="margin:0 0 10px">${placeTxt} Matte finish with an aged crack.</p>
           <div class="printmap"><figure>${tee(p.place,'front')}<figcaption class="mono muted">Front / ${tok(p.front)}</figcaption></figure><figure>${tee(p.place,'back')}<figcaption class="mono muted">Back / ${tok(p.back)}</figcaption></figure></div>
         </div></details>
         <details class="acc"><summary>Specs</summary><div class="body"><ul>
           <li>Style code: ${p.code} (${p.line==='og'?'OG Drop':'Exclusive'})</li><li>Body: ${p.colors?p.colors.map(c=>c.n).join(', '):p.color}</li>
-          <li>Ink: ${tok(p.ink)}</li><li>Fit: <span class="tok">fit</span></li><li>Fabric: <span class="tok">fabric / GSM from Tapstitch blank</span></li></ul></div></details>
+          <li>Ink: ${tok(p.ink)}</li></ul></div></details>
         <details class="acc"><summary>Care</summary><div class="body"><p style="margin:0">${p.care}</p></div></details>
         <details class="acc"><summary>Shipping and returns</summary><div class="body"><p style="margin:0">Each piece is printed for your order, so returns cover print defects, damage and wrong items. Hairline cracking and acid-wash variation are part of the design. <a href="#shipping">Full policy</a></p></div></details>
       </div>
@@ -545,12 +542,10 @@ function about(){
     <p class="mono muted">About</p><h1 class="disp">Gourmet<br>Ratchet</h1>
     <div class="twocol">
       <div class="prose">
-        <p style="font-size:21px;line-height:1.4"><span class="tok">brand meaning: wording from Marcos</span> This season runs two marks across eight pieces, every one printed when you order it.</p>
-        <p><span class="tok">2018 origin wording: started in Chicago in August 2018, introduced by Internz University</span></p>
-        <p><span class="tok">ComplexCon 2026 contest name, wording and permission to cite</span></p>
+        <p style="font-size:21px;line-height:1.4">This season runs two marks across eight pieces, every one printed when you order it.</p>
         <h3>Two marks</h3>
         <p>The OG Drop carries the block wordmark, two lines stacked tight. The Exclusive puts spray graffiti over copperplate script and runs as a limited drop.</p>
-        <p>Every piece is printed when you order it. <span class="tok">Exclusive fulfillment: confirm</span></p>
+        <p>Every piece is printed when you order it.</p>
         <p style="margin-top:24px"><a class="btn" href="#og">Shop the OG Drop</a> <a class="btn ghost" href="#exclusive" style="margin-left:6px">Shop the Exclusive</a></p>
       </div>
       <div style="display:grid;gap:10px"><img src="${IMG('og-hoodie-charcoal-back')}" alt="OG Hoodie, back"><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><img src="${IMG('print-detail-2')}" alt="Print detail" style="aspect-ratio:1;object-fit:cover"><img src="${IMG('look-og-crew-grey-back')}" alt="OG Crewneck back print" style="aspect-ratio:1;object-fit:cover"></div></div>
@@ -562,27 +557,23 @@ function shipping(){
     <p class="mono muted">Help</p><h1 class="disp">Shipping and Returns</h1>
     <div class="twocol"><div class="prose">
       <h3>Shipping</h3>
-      <p>Everything in this store is made to order. Your piece gets printed after you check out, which takes 2 to 4 business days, and then it ships. <span class="tok">Exclusive fulfillment: confirm</span> You'll get an email with tracking once it does.</p>
-      <ul><li>Production: 2 to 4 business days</li><li>Transit: <span class="tok">methods and transit times</span></li><li>Rates: shown at checkout, <span class="tok">shipping rates</span></li><li>Where we ship: <span class="tok">regions</span></li><li>Multiple items: <span class="tok">ship together or separately</span></li></ul>
+      <p>Everything in this store is made to order. Your piece gets printed after you check out, which takes 2 to 4 business days, and then it ships. You'll get an email with tracking once it does.</p>
+      <ul><li>Production: 2 to 4 business days</li><li>Rates: shown at checkout</li></ul>
     </div><div class="prose">
       <h3>Returns</h3>
       <p>Each piece is printed for your order, so we don't take returns for a change of mind. If something went wrong on our end, we'll make it right: a print defect, damage before it reached you, or the wrong item, color or size.</p>
-      <p>Email <span class="tok">contact email</span> within <span class="tok">claim window</span> of delivery with your order number and a photo. We'll send <span class="tok">replacement or refund</span>.</p>
+      <p>Reach out with your order number and a photo and we'll make it right.</p>
       <p>The hairline cracking in the print and the color variation on acid-wash hoodies are part of the design and don't count as defects.</p>
-      <p><b>Size exchanges:</b> <span class="tok">policy decision</span><br><b>Changing or canceling:</b> <span class="tok">cancellation window</span></p>
     </div></div></div></section>`;
 }
 
 const FAQ = [
- ['How does the sizing run?','Fit is {{fit}}. Every product page links to its size chart, measured with the garment laid flat. Measure a piece you already own that fits how you like and compare.'],
- ['How long until my order ships?','Each piece is printed after you order it. That takes 2 to 4 business days, then transit time depending on where you are and the shipping option you choose. {{Exclusive fulfillment: confirm}}'],
- ['Can I return something if it doesn\'t fit?','Since everything is printed to order, returns are for defects and wrong items. For sizing, {{size exchange policy}}.'],
- ['Do you ship internationally?','{{international shipping, regions, duties}}'],
+ ['How long until my order ships?','Each piece is printed after you order it. That takes 2 to 4 business days, then transit time depending on where you are and the shipping option you choose.'],
+ ['Can I return something if it doesn\'t fit?','Since everything is printed to order, returns are for defects and wrong items.'],
  ['How should I wash it?','Turn it inside out, wash it cold, and hang dry or tumble dry low. Skip the bleach and keep the iron off the print.'],
  ['Why does the print look cracked?','It\'s supposed to. The hairline cracking along the fold and wear lines is part of the print design, so every piece shows up already looking worn in.'],
  ['Why doesn\'t my hoodie look exactly like the photo?','The hoodies are acid washed, so the fade and the shade of charcoal change from one to the next. No two alike.'],
- ['Will the Exclusive come back?','The Exclusive is a limited drop, {{edition size}}. {{restock or no restock}}. Sign up for drop alerts for first word on what\'s next.'],
- ['How do I reach you?','Email {{contact email}} with your order number if you have one.'],
+ ['Will the Exclusive come back?','The Exclusive is a limited drop. Sign up for drop alerts for first word on what\'s next.'],
 ];
 function faq(){
   return `<section class="page sec" data-shopify="Page template: FAQ (Collapsible content section)"><div class="wrap">
@@ -590,11 +581,11 @@ function faq(){
     <div class="faq" style="max-width:860px">${FAQ.map(([q,a],i)=>`<details ${i===0?'open':''}><summary>${q}</summary><div class="a">${tok(a)}</div></details>`).join('')}</div>
   </div></section>`;
 }
-function sizeguide(){
+function sizeguide(){ return home();
   const row=(s)=>`<tr><td>${s}</td><td><span class="tok">in</span></td><td><span class="tok">in</span></td><td><span class="tok">in</span></td></tr>`;
   return `<section class="page sec" data-shopify="Page template: Size Guide (rich text + table, one per blank)"><div class="wrap">
     <p class="mono muted">Help</p><h1 class="disp">Size Guide</h1>
-    <div class="twocol"><div class="prose"><p>Every measurement is taken with the garment laid flat. Chest is measured straight across, armpit to armpit, and length runs from the highest point of the shoulder down to the hem. Lay out a piece you already own that fits how you like, measure it the same way, and match it to the chart.</p><p>The muscle tee has its own chart, since it's cut differently from the tees and fleece.</p><p><span class="tok">charts come from the final Tapstitch blank spec sheets</span></p></div>
+    <div class="twocol"><div class="prose"><p>Every measurement is taken with the garment laid flat. Chest is measured straight across, armpit to armpit, and length runs from the highest point of the shoulder down to the hem. Lay out a piece you already own that fits how you like, measure it the same way, and match it to the chart.</p><p>The muscle tee has its own chart, since it's cut differently from the tees and fleece.</p></div>
     <div style="display:grid;gap:18px">${['Tee','Muscle Tee','Crewneck and Hoodie'].map(t=>`<div><p class="lab" style="font-size:14px;margin-bottom:8px">${t}</p><div class="tbl"><table><thead><tr><th>Size</th><th>Chest</th><th>Length</th><th>Sleeve</th></tr></thead><tbody>${(t==='Work Jacket'?JSIZES:SIZES).map(row).join('')}</tbody></table></div></div>`).join('')}</div></div>
   </div></section>`;
 }
@@ -602,12 +593,11 @@ function soon(){
   return `<div class="soon sec" data-shopify="Password page (store live but locked until drop)"><div class="in">
     <img class="og" src="img/logo-og-bone.png" alt="Gourmet Ratchet">
     <img src="img/logo-exclusive-dark.png" alt="" style="width:min(220px,50vw);margin-top:-6px">
-    <p class="mono" style="color:#B9B2A3">New season / OG Drop and Exclusive / <span class="tok">drop date</span></p>
+    <p class="mono" style="color:#B9B2A3">New season / OG Drop and Exclusive</p>
     <h1 class="disp" style="font-size:clamp(46px,8vw,96px)">Drop alerts first.</h1>
     <form class="js-sign"><label for="email-soon" style="position:absolute;left:-9999px">Email</label><input id="email-soon" type="email" placeholder="Email address" required><button class="btn cb" type="submit">Put Me On</button></form>
-    <p class="ok mono" hidden>You're on the list. (Prototype: nothing was submitted.)</p>
+    <p class="ok mono" hidden>You're on the list.</p>
     <p class="mono" style="color:#B9B2A3">Instagram @gourmetratchet</p>
-    <a href="#home" class="mono" style="color:#B9B2A3">Back to the storefront design</a>
   </div></div>`;
 }
 
@@ -624,7 +614,7 @@ function openBag(){
       <button class="btn" type="button" id="checkout" ${BAG.length?'':'disabled style="opacity:.4"'}>Checkout</button></div></aside>`;
   document.getElementById('scrim').onclick=closeBag; document.getElementById('closebag').onclick=closeBag;
   root.querySelectorAll('[data-rm]').forEach(b=>b.onclick=()=>{BAG.splice(+b.dataset.rm,1);document.getElementById('bag-n').textContent=BAG.length;openBag();});
-  const co=document.getElementById('checkout'); if(co) co.onclick=()=>toast('Checkout runs on Shopify. Not wired in the prototype.');
+  const co=document.getElementById('checkout'); if(co) co.onclick=()=>toast('Checkout opens at launch.');
 }
 function closeBag(){document.getElementById('drawer-root').innerHTML='';}
 function toast(t){const el=document.createElement('div');el.className='toast';el.textContent=t;document.body.appendChild(el);setTimeout(()=>el.remove(),2200);}
@@ -660,7 +650,7 @@ window.addEventListener('hashchange',route);
 document.getElementById('bag-btn').onclick=openBag;
 document.getElementById('go-soon').onclick=()=>{location.hash='soon';};
 document.getElementById('menu-btn').onclick=e=>{const n=document.getElementById('nav');n.classList.toggle('open');e.currentTarget.setAttribute('aria-expanded',n.classList.contains('open'));};
-document.getElementById('maptoggle').onclick=e=>{const on=document.documentElement.classList.toggle('map');e.currentTarget.setAttribute('aria-pressed',on);e.currentTarget.textContent=on?'Hide Shopify sections':'Show Shopify sections';};
+void e=>{const on=document.documentElement.classList.toggle('map');e.currentTarget.setAttribute('aria-pressed',on);e.currentTarget.textContent=on?'Hide Shopify sections':'Show Shopify sections';};
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeBag();});
 route();
 </script>
