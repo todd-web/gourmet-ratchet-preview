@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow">
+<title>Gourmet Ratchet Storefront</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a garment tech-pack world. Bone paper, ink type, cobalt only where the Exclusive lives. Two marks, two sections, one store. Single deliberate theme: the store looks the same for every visitor. */
+:root{
+  --bone:#EDE6D6;      /* tech pack Bone, page ground */
+  --paper:#F5F0E5;     /* lifted surface for cards and drawers */
+  --ink:#1A1A1A;       /* tech pack Ink Black */
+  --ink-2:#4A453D;     /* secondary text, warm grey toward the bone */
+  --rule:#CFC6B2;      /* hairlines */
+  --cobalt:#2B4CF1;    /* Exclusive accent, sampled from the tech pack */
+  --navy:#1F2A44;
+  --display:"Archivo","Arial Narrow",Impact,sans-serif;
+  --body:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --gutter:clamp(16px,3.2vw,40px);
+  --max:1360px;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{background:var(--bone);color:var(--ink)}
+body{font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--cobalt);outline-offset:3px}
+.wrap{max-width:var(--max);margin-inline:auto;padding-inline:var(--gutter)}
+.disp{font-family:var(--display);font-stretch:62%;font-weight:850;text-transform:uppercase;line-height:.86;letter-spacing:-.005em;text-wrap:balance;margin:0}
+.lab{font-family:var(--display);font-stretch:112%;font-weight:900;text-transform:uppercase;letter-spacing:.01em;margin:0}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.04em;text-transform:uppercase}
+.muted{color:var(--ink-2)}
+.tok{display:inline-block;font-family:var(--mono);font-size:.78em;line-height:1.3;padding:1px 6px;border:1px dashed var(--cobalt);color:var(--cobalt);border-radius:3px;background:color-mix(in srgb,var(--cobalt) 6%,transparent);vertical-align:baseline;text-transform:none;letter-spacing:0}
+.dark .tok{color:#9fb0ff;border-color:#9fb0ff}
+
+/* proto strip */
+.proto{background:var(--paper);border-bottom:1px solid var(--rule);font-family:var(--mono);font-size:11.5px;color:var(--ink-2)}
+.proto .wrap{display:flex;gap:12px;align-items:center;justify-content:space-between;padding-block:7px;flex-wrap:wrap}
+.proto button{background:none;border:1px solid var(--rule);border-radius:3px;padding:3px 8px;cursor:pointer;font-family:var(--mono);font-size:11px}
+/* announcement */
+.ann{background:var(--ink);color:var(--bone);text-align:center;font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:9px 16px}
+/* header */
+header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:var(--bone);border-bottom:1px solid var(--ink)}
+header.site .wrap{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;padding-block:12px}
+.logo-link{display:block;width:96px}
+nav.main{display:flex;gap:clamp(14px,2.4vw,32px);justify-content:center}
+nav.main a{text-decoration:none;font-family:var(--display);font-stretch:112%;font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.04em;padding-block:4px;border-bottom:2px solid transparent}
+nav.main a:hover,nav.main a.on{border-color:var(--ink)}
+nav.main a.ex:hover,nav.main a.ex.on{border-color:var(--cobalt);color:var(--cobalt)}
+.hdr-r{display:flex;justify-content:flex-end;gap:14px;align-items:center}
+.bag-btn{background:var(--ink);color:var(--bone);border:0;border-radius:999px;padding:8px 14px;font-family:var(--display);font-stretch:112%;font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.05em;cursor:pointer}
+.menu-btn{display:none;background:none;border:1px solid var(--ink);border-radius:999px;padding:7px 12px;font-family:var(--display);font-stretch:112%;font-weight:800;font-size:12px;text-transform:uppercase;cursor:pointer}
+@media (max-width:760px){
+  header.site .wrap{grid-template-columns:auto 1fr auto}
+  nav.main{display:none}
+  nav.main.open{display:flex;flex-direction:column;gap:6px;position:absolute;left:0;right:0;top:100%;background:var(--bone);border-bottom:1px solid var(--ink);padding:14px var(--gutter) 18px}
+  nav.main.open a{font-size:20px}
+  .menu-btn{display:inline-block}
+  .logo-link{justify-self:center;width:84px}
+}
+
+/* sections and build-map overlay */
+.sec{position:relative}
+html.map .sec{outline:2px dashed var(--cobalt);outline-offset:-6px}
+html.map .sec::before{content:attr(data-shopify);position:absolute;z-index:30;top:10px;left:10px;background:var(--cobalt);color:#fff;font-family:var(--mono);font-size:11px;letter-spacing:.02em;padding:4px 8px;border-radius:3px;max-width:calc(100% - 20px);pointer-events:none}
+
+/* HERO: the two marks */
+.hero{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--ink)}
+.hero a{position:relative;display:block;text-decoration:none;overflow:hidden;min-height:clamp(380px,46vw,620px);color:var(--bone)}
+.hero img.ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+.hero a:hover img.ph{transform:scale(1.035)}
+.hero .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,10,0) 40%,rgba(10,10,10,.62) 100%)}
+.hero .cap{position:absolute;left:clamp(16px,2.6vw,32px);right:clamp(16px,2.6vw,32px);bottom:clamp(16px,2.6vw,30px);display:grid;gap:10px}
+.hero .mark{width:min(68%,340px)}
+.hero .row{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;gap:8px;border:1.5px solid currentColor;border-radius:999px;padding:8px 14px;font-family:var(--display);font-stretch:112%;font-weight:800;font-size:12.5px;text-transform:uppercase;letter-spacing:.05em}
+.hero .og .pill{background:var(--bone);color:var(--ink);border-color:var(--bone)}
+.hero .ex .pill{background:var(--cobalt);color:#fff;border-color:var(--cobalt)}
+.hero .meta{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;opacity:.92}
+@media (max-width:760px){.hero{grid-template-columns:1fr}.hero a{min-height:420px}}
+
+/* statement + print detail */
+.statement{padding-block:clamp(48px,7vw,96px);border-bottom:1px solid var(--ink)}
+.statement .grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(24px,4vw,64px);align-items:end}
+.statement h2{font-size:clamp(52px,8.4vw,128px)}
+.statement p{max-width:46ch;margin:18px 0 0}
+.details{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.details figure{margin:0}
+.details img{aspect-ratio:3/4;object-fit:cover;width:100%}
+.details figcaption{margin-top:6px}
+.specline{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:26px;padding-top:14px;border-top:1px solid var(--rule)}
+@media (max-width:860px){.statement .grid{grid-template-columns:1fr}}
+
+/* section headers */
+.shead{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+.shead h2{font-size:clamp(40px,6vw,84px)}
+.shead p{margin:8px 0 0;max-width:52ch}
+.shead a.more{font-family:var(--display);font-stretch:112%;font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.05em;text-decoration:none;border-bottom:2px solid currentColor;padding-bottom:2px}
+.band{padding-block:clamp(44px,6vw,84px)}
+.band.og{border-bottom:1px solid var(--ink)}
+
+/* product cards */
+.rail{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+@media (max-width:1100px){.rail{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:minmax(220px,42%);overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:10px;scrollbar-width:thin}.rail .card{scroll-snap-align:start}}
+@media (max-width:520px){.rail{grid-auto-columns:76%}}
+.grid3{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px 16px}
+@media (max-width:900px){.grid3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.card{display:grid;gap:10px;text-decoration:none;min-width:0}
+.card .imgbox{position:relative;aspect-ratio:4/5;background:#ECE5D4;overflow:hidden}
+.card .imgbox img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .35s}
+.card .imgbox img.alt{opacity:0}
+.card:hover .imgbox img.alt{opacity:1}
+.card .tag{position:absolute;top:10px;left:10px;z-index:2;background:var(--cobalt);color:#fff;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:3px 7px}
+.card .tag.mto{background:var(--ink);color:var(--bone)}
+.card .t{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.card .t b{font-family:var(--display);font-stretch:100%;font-weight:800;font-size:15px;text-transform:uppercase;letter-spacing:.01em}
+.card .t span{font-family:var(--mono);font-size:13px;white-space:nowrap}
+.card .s{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.sw{display:flex;gap:5px}
+.sw i{width:12px;height:12px;border-radius:50%;border:1px solid rgba(0,0,0,.25);display:block}
+
+/* exclusive band: ink ground, cobalt accent */
+.dark{background:var(--ink);color:var(--bone)}
+.dark .muted{color:#B9B2A3}
+.dark .card .imgbox{background:#262523}
+.band.ex .exmark{width:min(330px,70%)}
+.band.ex .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;border:1px solid currentColor;border-radius:999px;padding:4px 10px}
+.chip.cb{background:var(--cobalt);border-color:var(--cobalt);color:#fff}
+
+/* records feature */
+.records{display:grid;grid-template-columns:1.1fr 1fr 1fr;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink)}
+.records .txt{padding:clamp(28px,4vw,56px) var(--gutter);display:flex;flex-direction:column;justify-content:space-between;gap:24px;min-width:0}
+.records h2{font-size:clamp(44px,5.6vw,80px)}
+.records img{width:100%;height:100%;object-fit:cover;min-height:360px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:var(--ink);color:var(--bone);border:1.5px solid var(--ink);border-radius:999px;padding:14px 22px;font-family:var(--display);font-stretch:112%;font-weight:850;font-size:13.5px;text-transform:uppercase;letter-spacing:.05em;text-decoration:none;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.cb{background:var(--cobalt);border-color:var(--cobalt);color:#fff}
+.btn.bone{background:var(--bone);color:var(--ink);border-color:var(--bone)}
+@media (max-width:900px){.records{grid-template-columns:1fr 1fr}.records .txt{grid-column:1/-1}}
+
+/* signup */
+.signup{padding-block:clamp(52px,7vw,96px);text-align:center}
+.signup h2{font-size:clamp(54px,9vw,140px)}
+.signup form{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:24px}
+.signup input{min-width:0;flex:0 1 340px;background:var(--paper);border:1.5px solid var(--ink);border-radius:999px;padding:13px 18px;font:inherit}
+.signup .ok{margin-top:14px;font-family:var(--mono);font-size:12px;letter-spacing:.05em;text-transform:uppercase}
+
+/* footer */
+footer.site{background:var(--ink);color:var(--bone);padding-block:52px 28px}
+footer.site .cols{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:28px}
+footer.site h4{font-family:var(--mono);font-weight:500;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#B9B2A3;margin:0 0 12px}
+footer.site ul{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+footer.site a{text-decoration:none}
+footer.site a:hover{text-decoration:underline}
+footer.site .bot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:44px;padding-top:16px;border-top:1px solid #3a3833;font-family:var(--mono);font-size:11px;color:#B9B2A3;letter-spacing:.05em;text-transform:uppercase}
+@media (max-width:760px){footer.site .cols{grid-template-columns:1fr 1fr}footer.site .cols>div:first-child{grid-column:1/-1}}
+
+/* collection page */
+.colhead{padding-block:clamp(36px,5vw,64px) 24px;border-bottom:1px solid var(--ink)}
+.colhead h1{font-size:clamp(64px,11vw,170px)}
+.colhead p{max-width:62ch;margin:16px 0 0}
+.filters{display:flex;gap:8px;flex-wrap:wrap;padding-block:18px}
+.filters button{background:transparent;border:1.5px solid var(--ink);border-radius:999px;padding:6px 13px;font-family:var(--display);font-stretch:112%;font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.04em;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--bone)}
+.ex-page .filters button{border-color:var(--bone)}
+.ex-page .filters button[aria-pressed="true"]{background:var(--cobalt);border-color:var(--cobalt);color:#fff}
+
+/* product page */
+.pdp{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(20px,4vw,56px);padding-block:28px 64px}
+.gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;align-content:start}
+.gallery figure{margin:0;background:var(--paper);position:relative}
+.gallery figure.wide{grid-column:1/-1}
+.gallery img{width:100%;aspect-ratio:4/5;object-fit:cover}
+.gallery figure.wide img{aspect-ratio:16/10}
+.gallery figure.solo{grid-column:1/-1;max-width:520px}
+.gallery figcaption{position:absolute;left:8px;bottom:8px;background:var(--bone);padding:3px 7px}
+.info{position:sticky;top:84px;align-self:start;display:grid;gap:16px;min-width:0}
+.crumb{display:flex;gap:8px;flex-wrap:wrap}
+.crumb a{text-decoration:none;border-bottom:1px solid var(--rule)}
+.info h1{font-size:clamp(46px,5vw,76px)}
+.price{font-family:var(--mono);font-size:18px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.hook{font-size:18px;line-height:1.4;margin:0}
+.opt{display:grid;gap:8px}
+.opt .lbl{display:flex;justify-content:space-between;gap:10px}
+.opt .lbl a{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.04em;cursor:pointer}
+.swatches{display:flex;gap:8px;flex-wrap:wrap}
+.swatches button{display:flex;gap:8px;align-items:center;background:var(--paper);border:1.5px solid var(--rule);border-radius:999px;padding:5px 12px 5px 6px;cursor:pointer;font-size:13.5px}
+.swatches button i{width:20px;height:20px;border-radius:50%;border:1px solid rgba(0,0,0,.25)}
+.swatches button[aria-pressed="true"]{border-color:var(--ink)}
+.sizes{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}
+.sizes button{background:var(--paper);border:1.5px solid var(--rule);border-radius:4px;padding:11px 0;font-family:var(--mono);font-size:13px;cursor:pointer}
+.sizes button[aria-pressed="true"]{background:var(--ink);color:var(--bone);border-color:var(--ink)}
+.add{width:100%;padding:17px 22px;font-size:15px}
+.mto{border:1px solid var(--ink);padding:12px 14px;display:grid;grid-template-columns:auto 1fr;gap:4px 12px;align-items:start;font-size:14px}
+.mto .k{font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;padding-top:2px}
+details.acc{border-top:1px solid var(--ink)}
+details.acc:last-of-type{border-bottom:1px solid var(--ink)}
+details.acc summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:14px 0;font-family:var(--display);font-stretch:112%;font-weight:850;font-size:14px;text-transform:uppercase;letter-spacing:.04em}
+details.acc summary::-webkit-details-marker{display:none}
+details.acc summary::after{content:"+";font-family:var(--mono);font-size:18px}
+details.acc[open] summary::after{content:"\2212"}
+details.acc .body{padding:0 0 18px;font-size:15px}
+details.acc ul{margin:0;padding-left:18px;display:grid;gap:4px}
+.printmap{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:4px}
+.printmap figure{margin:0;background:var(--paper);padding:10px;border:1px solid var(--rule)}
+.printmap svg{width:100%;height:auto;display:block}
+.printmap figcaption{margin-top:6px}
+.vary{background:var(--paper);border-left:3px solid var(--cobalt);padding:10px 12px;font-size:14px}
+@media (max-width:900px){.pdp{grid-template-columns:1fr}.info{position:static}}
+.related{padding-block:40px 70px;border-top:1px solid var(--ink)}
+
+/* pages */
+.page{padding-block:clamp(36px,5vw,72px) 80px}
+.page h1{font-size:clamp(60px,10vw,150px);margin-bottom:28px}
+.prose{max-width:66ch;font-size:17px}
+.prose h3{font-family:var(--display);font-stretch:112%;font-weight:900;text-transform:uppercase;font-size:17px;letter-spacing:.02em;margin:34px 0 8px}
+.prose p{margin:0 0 14px}
+.prose ul{padding-left:20px;display:grid;gap:5px}
+.twocol{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,5vw,72px);align-items:start}
+@media (max-width:900px){.twocol{grid-template-columns:1fr}}
+.faq details{border-top:1px solid var(--ink)}
+.faq details:last-child{border-bottom:1px solid var(--ink)}
+.faq summary{cursor:pointer;list-style:none;padding:16px 0;font-weight:700;font-size:18px;display:flex;justify-content:space-between;gap:16px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-family:var(--mono)}
+.faq details[open] summary::after{content:"\2212"}
+.faq .a{padding:0 0 18px;max-width:66ch}
+.tbl{overflow-x:auto;border:1px solid var(--ink)}
+table{border-collapse:collapse;width:100%;font-family:var(--mono);font-size:13px;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--rule);white-space:nowrap}
+th{background:var(--ink);color:var(--bone);font-weight:500;letter-spacing:.05em;text-transform:uppercase;font-size:11.5px}
+
+/* coming soon */
+.soon{min-height:100%;background:var(--ink);color:var(--bone);display:grid;place-items:center;padding:60px var(--gutter);text-align:center}
+.soon .in{display:grid;gap:22px;justify-items:center;max-width:620px}
+.soon .og{width:min(440px,80vw)}
+.soon form{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;width:100%}
+.soon input{flex:1 1 260px;min-width:0;background:transparent;border:1.5px solid var(--bone);color:var(--bone);border-radius:999px;padding:13px 18px;font:inherit}
+.soon input::placeholder{color:#B9B2A3}
+
+/* bag drawer */
+.scrim{position:fixed;inset:0;background:rgba(15,15,15,.45);z-index:60}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);z-index:61;background:var(--bone);border-left:1px solid var(--ink);display:grid;grid-template-rows:auto 1fr auto;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.drawer .hd{display:flex;justify-content:space-between;align-items:center;padding:18px 20px;border-bottom:1px solid var(--ink)}
+.drawer .hd button{background:none;border:0;font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.05em;cursor:pointer}
+.drawer .items{overflow:auto;padding:8px 20px;display:grid;align-content:start}
+.line{display:grid;grid-template-columns:76px 1fr auto;gap:12px;padding-block:14px;border-bottom:1px solid var(--rule);align-items:start}
+.line img{width:76px;aspect-ratio:4/5;object-fit:cover}
+.line b{font-family:var(--display);font-stretch:100%;font-weight:800;text-transform:uppercase;font-size:14px}
+.line .rm{background:none;border:0;font-family:var(--mono);font-size:11px;text-decoration:underline;cursor:pointer;padding:0}
+.drawer .ft{padding:16px 20px 20px;border-top:1px solid var(--ink);display:grid;gap:12px}
+.drawer .tot{display:flex;justify-content:space-between;font-family:var(--mono);font-size:15px}
+.empty{padding:40px 0;text-align:center}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bone);font-family:var(--mono);font-size:12px;letter-spacing:.05em;text-transform:uppercase;padding:10px 16px;border-radius:999px;z-index:70}
+
+/* map toggle */
+footer.site .muted{color:#B9B2A3}
+footer.site li a{display:inline-block;padding-block:4px}
+.dark .sw i{border-color:rgba(237,230,214,.5)}
+@media (min-width:1101px){.rail.r4{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.hero .og img.ph{object-position:50% 62%}
+@media (max-width:760px){.hero .shade{background:linear-gradient(180deg,rgba(10,10,10,0) 30%,rgba(10,10,10,.82) 100%)}.hero .ex img.ph{object-position:30% 40%}}
+.mhead{display:none}
+@media (max-width:900px){.mhead{display:grid;gap:8px}.info .crumb,.info h1,.info .price{display:none}}
+.maptoggle{position:fixed;left:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:50;background:var(--cobalt);color:#fff;border:0;border-radius:999px;padding:10px 15px;font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;box-shadow:0 6px 18px rgba(20,30,90,.28)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="proto"><div class="wrap"><span>Design prototype for gourmetratchet.com. Prices, sizes, fit, fabric and edition counts are placeholders until Marcos and Chris confirm. Dashed blue chips mark open items. Product shots are AI-rebuilt flat lays from the tech pack; real sample photos replace them when Tapstitch samples land.</span><span style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" id="go-soon">View coming-soon page</button></span></div></div>
+<div id="chrome">
+<div class="ann sec" data-shopify="Announcement bar">Every piece is printed to order and ships in 2 to 4 business days, plus transit. <span class="tok" style="color:#9fb0ff;border-color:#9fb0ff">Exclusive fulfillment: confirm</span></div>
+<header class="site sec" data-shopify="Header (sticky, logo center on mobile)">
+  <div class="wrap">
+    <button class="menu-btn" type="button" id="menu-btn" aria-expanded="false" aria-controls="nav">Menu</button>
+    <a href="#home" class="logo-link" aria-label="Gourmet Ratchet home"><img src="img/logo-og-ink.png" alt="Gourmet Ratchet"></a>
+    <nav class="main" id="nav">
+      <a href="#og" data-r="og">OG Drop</a>
+      <a href="#exclusive" data-r="exclusive" class="ex">Exclusive</a>
+      <a href="#about" data-r="about">About</a>
+    </nav>
+    <div class="hdr-r"><button class="bag-btn" type="button" id="bag-btn">Bag (<span id="bag-n">0</span>)</button></div>
+  </div>
+</header>
+</div>
+<main id="view"></main>
+<div id="footwrap"></div>
+<div id="drawer-root"></div>
+<button class="maptoggle" type="button" id="maptoggle" aria-pressed="false">Show Shopify sections</button>
+
+<script>
+const IMG = n => `img/${n}.jpg`;
+const tok = s => s.replace(/\{\{([^}]+)\}\}/g,(m,t)=>`<span class="tok">${t.trim()}</span>`);
+const money = n => `$${n}`;
+const SIZES = ['S','M','L','XL','2XL','3XL'];
+const JSIZES = ['S','M','L','XL','2XL'];
+const CARE_TOP = 'Turn it inside out and wash cold with like colors, then hang dry or tumble dry low. Skip the bleach and keep the iron off the print.';
+const CARE_HOOD = 'Turn it inside out and wash cold with darks for the first few washes, then hang dry or tumble dry low. Skip the bleach and keep the iron off the print.';
+const CARE_JKT = 'Button it up, turn it inside out and wash cold on gentle, then hang it to dry. Spot clean between washes since natural canvas shows marks, and keep bleach and the iron away from the print.';
+const VARY = 'Every hoodie is acid washed, so the fade, the mottling and the exact shade of charcoal shift from piece to piece. No two alike.';
+const SW = {Black:'#1c1c1d','Deep Navy':'#1f2a44',Grey:'#9a968f',Bone:'#e8e1cf','Faded Grey':'#a49f98','Washed Charcoal':'#4b4a4c','Natural Canvas':'#e6dcc6'};
+
+/* PLACEHOLDER retail prices for layout only. Owner: Marcos and Chris. */
+const P = [
+ {h:'og-tee-black',line:'og',type:'Tees',name:'OG Tee',color:'Black',code:'GR-TE-01',price:45,img:'og-tee-black',place:'tee',sizes:SIZES,
+  hook:'Bone ink on black, small on the chest and big across the back.',
+  desc:'The Gourmet Ratchet block wordmark in bone on a black tee, stacked on two lines the way it always sits. There\'s a small hit on the wearer\'s left chest and a full hit across the back, and the print is matte with hairline cracks along the fold and wear lines, so it looks lived in from the first wear.',
+  ink:'Bone',front:'Left-chest hit, wearer\'s left',back:'Full hit, centered',care:CARE_TOP,detail:1},
+ {h:'og-muscle-black',line:'og',type:'Muscle tees',name:'OG Muscle Tee',color:'Black',code:'GR-MT-01',price:40,img:'og-muscle-black',place:'muscle',sizes:SIZES,
+  hook:'Sleeves off, with the mark sitting right in the middle.',
+  desc:'Same block wordmark as the tee, placed differently. On the black muscle tee both hits are centered, a chest hit in the middle of the front and a full hit on the back that sits lower on the panel than anything else in the drop. The ink is bone and matte, with a worn-in crackle running through the letters.',
+  ink:'Bone',front:'Centered chest hit',back:'Centered full hit, set lower',care:CARE_TOP,detail:1},
+ {h:'og-crew-grey',line:'og',type:'Crewnecks',name:'OG Crewneck',color:'Faded Grey',code:'GR-CN-01',price:70,img:'og-crew-grey',place:'tee',sizes:SIZES,
+  hook:'A faded gray crew with the wordmark on the front and the back.',
+  desc:'A faded gray crewneck carrying the Gourmet Ratchet block wordmark, two lines stacked tight and never stretched out. There\'s a small hit on the wearer\'s left chest and a full hit across the back, and the print comes matte and already aged, with fine cracking along the fold lines.',
+  ink:'{{Front ink black, back bone on the mock: confirm with Chris}}',front:'Left-chest hit, wearer\'s left',back:'Full hit, centered',care:CARE_TOP,detail:2},
+ {h:'og-hoodie-charcoal',line:'og',type:'Hoodies',name:'OG Hoodie',color:'Washed Charcoal',code:'GR-HD-01',price:85,img:'og-hoodie-charcoal',place:'tee',sizes:SIZES,vary:true,
+  hook:'Acid-washed charcoal, so yours won\'t look like anybody else\'s.',
+  desc:'Washed charcoal hoodie with the block wordmark in bone, small on the left chest and full across the back. The acid wash leaves the body mottled and faded, and the print goes with it, matte with cracks along the fold and wear lines, so it shows up looking like it\'s been in your rotation for a couple of years.',
+  ink:'Bone',front:'Left-chest hit, wearer\'s left',back:'Full hit, centered',care:CARE_HOOD,detail:2},
+ {h:'ex-tee',line:'ex',type:'Tees',name:'Exclusive Tee',color:'4 colors',code:'GR-TE-01',price:55,img:'ex-tee-black',place:'tee',sizes:SIZES,
+  colors:[{n:'Black',img:'ex-tee-black',ink:'Bone graffiti, cobalt script'},{n:'Deep Navy',img:'ex-tee-navy',ink:'All bone'},{n:'Grey',img:'ex-tee-grey',ink:'Black graffiti, cobalt script'},{n:'Bone',img:'ex-tee-bone',ink:'Black graffiti, cobalt script'}],
+  hook:'Spray graffiti over copperplate script, in four colorways, limited.',
+  desc:'The Exclusive mark: "Gourmet" in spray graffiti with the drips left in, over "Ratchet" in copperplate script, with three sparkle stars around it. There\'s a small hit on the left chest and a full hit across the back. The ink changes with the body, bone graffiti and cobalt script on Black, black graffiti and cobalt script on Grey and Bone, and all bone on Deep Navy, and every one of them is matte with hairline cracking.',
+  ink:'Changes by color',front:'Left-chest hit, wearer\'s left',back:'Full hit, centered',care:CARE_TOP,detail:1},
+ {h:'ex-muscle-navy',line:'ex',type:'Muscle tees',name:'Exclusive Muscle Tee',color:'Deep Navy',code:'GR-MT-01',price:50,img:'ex-muscle-navy',place:'muscle',sizes:SIZES,hideFront:true,
+  hook:'All bone on deep navy, with both hits centered.',
+  desc:'The Exclusive mark on a deep navy muscle tee: graffiti "Gourmet" over copperplate "Ratchet" and three sparkle stars, every bit of it in bone, because cobalt gets lost on navy. Both hits are centered like the OG muscle tee, with the back hit sitting lower on the panel, and the print is matte with an aged crack running through it.',
+  ink:'All bone',front:'Centered chest hit',back:'Centered full hit, set lower',care:CARE_TOP,detail:1},
+ {h:'ex-crew-grey',line:'ex',type:'Crewnecks',name:'Exclusive Crewneck',color:'Faded Grey',code:'GR-CN-01',price:80,img:'ex-crew-grey',place:'tee',sizes:SIZES,
+  hook:'Black graffiti and cobalt script on a faded gray crew.',
+  desc:'Faded gray crewneck with the Exclusive mark: black spray graffiti with the drips still running, cobalt copperplate script underneath, and three sparkle stars around the script. It takes a left-chest hit on the front and a full hit across the back, and both inks come out matte with cracking along the fold lines, cobalt included.',
+  ink:'Black graffiti, cobalt script',front:'Left-chest hit, wearer\'s left',back:'Full hit, centered',care:CARE_TOP,detail:2},
+ {h:'ex-hoodie-charcoal',line:'ex',type:'Hoodies',name:'Exclusive Hoodie',color:'Washed Charcoal',code:'GR-HD-01',price:95,img:'ex-hoodie-charcoal',place:'tee',sizes:SIZES,vary:true,
+  hook:'Bone graffiti and cobalt script on acid-washed charcoal.',
+  desc:'Washed charcoal hoodie with the Exclusive mark in two inks, bone spray graffiti on top and cobalt copperplate script underneath with three sparkle stars, small on the left chest and full across the back. The cobalt cracks along the fold lines the same way the bone does, so the color looks like it aged right along with the acid wash.',
+  ink:'Bone graffiti, cobalt script',front:'Left-chest hit, wearer\'s left',back:'Full hit, centered',care:CARE_HOOD,detail:2},
+];
+const byH = Object.fromEntries(P.map(p=>[p.h,p]));
+const OG = P.filter(p=>p.line==='og'), EX = P.filter(p=>p.line==='ex');
+
+function card(p,dark){
+  const sw = p.colors ? `<span class="sw">${p.colors.map(c=>`<i style="background:${SW[c.n]}" title="${c.n}"></i>`).join('')}</span>` : `<span class="sw"><i style="background:${SW[p.color]}" title="${p.color}"></i></span>`;
+  const tag = p.line==='ex' ? `<span class="tag">${p.records?'GR Records':'Limited'}</span>` : '';
+  return `<a class="card" href="#p-${p.h}">
+    <div class="imgbox">${tag}${p.hideBack?`<img src="${IMG(p.img+'-front')}" alt="${p.name}, ${p.color}, front" loading="lazy">`:`<img src="${IMG(p.img+'-back')}" alt="${p.name}, ${p.color}, back" loading="lazy">${(p.noFront||p.hideFront)?'':`<img class="alt" src="${IMG(p.img+'-front')}" alt="" loading="lazy">`}`}</div>
+    <div class="t"><b>${p.name}</b><span>${money(p.price)}</span></div>
+    <div class="s"><span class="mono ${dark?'muted':'muted'}">${p.color}</span>${sw}</div>
+  </a>`;
+}
+
+function footer(){
+  return `<footer class="site sec" data-shopify="Footer">
+  <div class="wrap">
+    <div class="cols">
+      <div><img src="img/logo-og-bone.png" alt="Gourmet Ratchet" style="width:150px"><p class="muted" style="max-width:34ch;margin-top:16px;font-size:14px">Printed to order. Matte print, cracked on purpose. <span class="tok" style="color:#9fb0ff;border-color:#9fb0ff">Exclusive fulfillment: confirm</span></p></div>
+      <div><h4>Shop</h4><ul><li><a href="#og">OG Drop</a></li><li><a href="#exclusive">Exclusive</a></li></ul></div>
+      <div><h4>Help</h4><ul><li><a href="#shipping">Shipping and Returns</a></li><li><a href="#size">Size Guide</a></li><li><a href="#faq">FAQ</a></li><li><span class="tok">contact email</span></li></ul></div>
+      <div><h4>Brand</h4><ul><li><a href="#about">About</a></li><li><a href="https://www.instagram.com/gourmetratchet/" target="_blank" rel="noopener">Instagram @gourmetratchet</a></li><li><span class="tok">Facebook URL</span></li></ul></div>
+    </div>
+    <div class="bot"><span>&copy; 2026 Gourmet Ratchet</span><span>Privacy / Terms / Refund policy</span></div>
+  </div></footer>`;
+}
+
+function signup(){
+  return `<section class="signup sec" data-shopify="Email signup (Shopify Customers, synced to Klaviyo or Shopify Email)"><div class="wrap">
+    <p class="mono muted">Drop alerts</p>
+    <h2 class="disp">Get the drop alert.</h2>
+    <p class="muted" style="max-width:44ch;margin:16px auto 0">We'll email you when a new drop goes live, so you hear about it before it's gone.</p>
+    <form class="js-sign"><label class="mono" for="email-home" style="position:absolute;left:-9999px">Email</label><input id="email-home" type="email" placeholder="Email address" required><button class="btn" type="submit">Get Drop Alerts</button></form>
+    <p class="ok" hidden>You're on the list. (Prototype: nothing was submitted.)</p>
+    <p class="mono muted" style="margin-top:14px"><span class="tok">email frequency and privacy link</span></p>
+  </div></section>`;
+}
+
+function home(){
+  return `
+  <h1 class="sr">Gourmet Ratchet: the OG Drop and the Exclusive</h1>
+  <section class="hero sec" data-shopify="Custom section: split hero (or two Image banners side by side)">
+    <a class="og" href="#og"><img class="ph" src="${IMG('look-og-tee-black-back')}" alt="OG Tee in black, back print">
+      <div class="shade"></div>
+      <div class="cap">
+        <div class="row"><span class="meta">OG Drop / the main mark / 4 pieces</span><span class="pill">Shop the OG Drop</span></div></div></a>
+    <a class="ex" href="#exclusive"><img class="ph" src="${IMG('look-ex-tee-navy-back')}" alt="Exclusive Tee in deep navy, back print">
+      <div class="shade"></div>
+      <div class="cap"><span class="chip cb" style="justify-self:start">Limited drop</span>
+        <div class="row"><span class="meta">Exclusive / graffiti over script / <span class="tok">edition size</span></span><span class="pill">Shop the Exclusive</span></div></div></a>
+  </section>
+
+  <section class="statement sec" data-shopify="Image with text, or Collage (3 print-detail images + rich text)"><div class="wrap grid">
+    <div>
+      <p class="mono muted">The new season</p>
+      <h2 class="disp" style="margin-top:14px">Matte print. Cracked on purpose.</h2>
+      <p class="muted">Two marks, eight pieces, and every one gets printed when you order it. The finish is matte, with hairline cracks along the fold and wear lines. <span class="tok">Exclusive fulfillment: confirm</span></p>
+      <div class="specline mono muted"><span>Bone ink on dark bodies</span><span>Black ink on gray and bone</span><span>Cobalt on the Exclusive</span></div>
+    </div>
+    <div class="details">
+      <figure><img src="${IMG('print-detail-1')}" alt="Bone graffiti and script on navy, close up" loading="lazy"><figcaption class="mono muted">Bone on navy</figcaption></figure>
+      <figure><img src="${IMG('print-detail-2')}" alt="Cobalt script cracking on charcoal, close up" loading="lazy"><figcaption class="mono muted">Cobalt on charcoal</figcaption></figure>
+      <figure><img src="${IMG('detail-og-tee-black')}" alt="OG wordmark in bone on black, close up" loading="lazy"><figcaption class="mono muted">OG on black</figcaption></figure>
+    </div>
+  </div></section>
+
+  <section class="band og sec" data-shopify="Featured collection: OG Drop (5 products)"><div class="wrap">
+    <div class="shead"><div><p class="mono muted">Section 01</p><h2 class="disp">OG Drop</h2><p class="muted">The main mark, GOURMET stacked over RATCHET in a heavy block, on four pieces, in bone ink.</p></div><a class="more" href="#og">Shop all 4</a></div>
+    <div class="rail">${OG.map(p=>card(p)).join('')}</div>
+  </div></section>
+
+  <section class="band ex dark sec" data-shopify="Featured collection: Exclusive (color scheme: Ink)"><div class="wrap">
+    <div class="shead"><div><p class="mono muted">Section 02</p><img class="exmark" src="img/logo-exclusive-dark.png" alt="Gourmet Ratchet Exclusive mark" style="margin-top:10px">
+      <div class="chips"><span class="chip cb">Limited drop</span><span class="chip">Edition: <span class="tok">size</span></span><span class="chip">Tee in 4 colors</span></div>
+      <p class="muted" style="margin-top:14px">Spray graffiti over copperplate script, three sparkle stars, and cobalt wherever the body can carry it.</p></div>
+      <a class="more" href="#exclusive">Shop the Exclusive</a></div>
+    <div class="rail">${EX.map(p=>card(p,true)).join('')}</div>
+  </div></section>
+
+  ${signup()}`;
+}
+
+function collection(line){
+  const ex = line==='ex', list = ex?EX:OG;
+  const types = ['All',...new Set(list.map(p=>p.type))];
+  const intro = ex
+    ? 'The Exclusive puts "Gourmet" in spray graffiti, drips and all, over "Ratchet" in copperplate script, with exactly three sparkle stars. Cobalt shows up wherever the body can carry it, and the navy pieces go all bone. Edition size is {{edition size}}.'
+    : 'The OG Drop runs the main Gourmet Ratchet wordmark, two lines, stacked flush, never stretched. Four pieces: a tee, a muscle tee, a faded gray crew and an acid-washed charcoal hoodie. Every piece is printed when you order it.';
+  return `<div class="${ex?'dark ex-page':''}">
+  <section class="colhead sec" data-shopify="Collection banner" style="${ex?'border-color:var(--bone)':''}"><div class="wrap">
+    <p class="mono muted">Section ${ex?'02':'01'} / ${list.length} pieces</p>
+    ${ex?`<img src="img/logo-exclusive-dark.png" alt="Exclusive" style="width:min(520px,86%);margin-top:16px">`:`<h1 class="disp" style="margin-top:12px">OG Drop</h1>`}
+    <p class="muted">${tok(intro)}</p>
+  </div></section>
+  <section class="sec" data-shopify="Main collection product grid (filters: product type)"><div class="wrap">
+    <div class="filters" role="group" aria-label="Filter by garment">${types.map((t,i)=>`<button type="button" data-f="${t}" aria-pressed="${i===0}">${t}</button>`).join('')}</div>
+    <div class="grid3" id="cgrid">${list.map(p=>card(p,ex)).join('')}</div>
+    <div style="height:72px"></div>
+  </div></section></div>`;
+}
+
+function tee(kind,side){
+  const body = kind==='muscle'
+    ? 'M62 10 L80 4 Q100 18 120 4 L138 10 Q142 50 156 66 L156 212 L44 212 L44 66 Q58 50 62 10 Z'
+    : 'M60 10 L80 4 Q100 18 120 4 L140 10 L190 42 L172 80 L152 68 L152 212 L48 212 L48 68 L28 80 L10 42 Z';
+  const bx = kind==='muscle'?44:48, bw = kind==='muscle'?112:104, top=4, len=208;
+  let r;
+  if(side==='front'){
+    const w=bw*.24, h=w*.44, y=top+len*.32;
+    const x = kind==='muscle' ? 100-w/2 : 100+6;
+    r={x,y,w,h};
+  } else {
+    const w=bw*.46, h=w*.44, y= top+len*(kind==='muscle'?.30:.20);
+    r={x:100-w/2,y,w,h};
+  }
+  const neck = side==='front' ? '<path d="M80 4 Q100 22 120 4" fill="none" stroke="#1A1A1A" stroke-width="1.4"/>' : '<path d="M80 4 Q100 10 120 4" fill="none" stroke="#1A1A1A" stroke-width="1.4"/>';
+  return `<svg viewBox="0 0 200 222" role="img" aria-label="${side} print placement">
+    <path d="${body}" fill="#F5F0E5" stroke="#1A1A1A" stroke-width="1.6" stroke-linejoin="round"/>${neck}
+    <rect x="${r.x.toFixed(1)}" y="${r.y.toFixed(1)}" width="${r.w.toFixed(1)}" height="${r.h.toFixed(1)}" fill="#2B4CF1" fill-opacity=".18" stroke="#2B4CF1" stroke-width="1.4"/>
+    <line x1="${bx}" x2="${bx+bw}" y1="218" y2="218" stroke="#4A453D" stroke-width=".8"/>
+  </svg>`;
+}
+
+function pdp(h){
+  const p = byH[h]; if(!p) return home();
+  const state = {color: p.colors ? p.colors[0] : null, size: null};
+  const imgBase = () => state.color ? state.color.img : p.img;
+  const related = (p.line==='og'?OG:EX).filter(x=>x.h!==p.h).slice(0,4);
+  const placeTxt = p.place==='muscle'
+    ? 'Front: centered chest hit, 24% of body width. Back: centered full hit, 46% of body width, set lower on the back panel.'
+    : 'Front: chest hit at 24% of body width, wearer\'s left, top 32% down. Back: full hit at 46% of body width, centered, top 20% down.';
+  const html = `
+  <section class="sec" data-shopify="Main product (gallery left, buy box right)"><div class="wrap pdp">
+    <div class="mhead"><div class="crumb mono muted"><a href="#${p.line==='og'?'og':'exclusive'}">${p.line==='og'?'OG Drop':'Exclusive'}</a><span>/</span><span>${p.code}</span></div><h1 class="disp" style="font-size:44px">${p.name}</h1><div class="price"><span>${money(p.price)}</span><span class="mono muted">Placeholder price</span></div></div>
+    <div class="gallery" id="gal"></div>
+    <div class="info">
+      <div class="crumb mono muted"><a href="#${p.line==='og'?'og':'exclusive'}">${p.line==='og'?'OG Drop':'Exclusive'}</a><span>/</span><span>${p.code}</span></div>
+      <h1 class="disp">${p.name}</h1>
+      <div class="price"><span>${money(p.price)}</span>${p.line==='ex'?'<span class="chip cb">Limited drop</span>':''}<span class="mono muted">Placeholder price</span></div>
+      <p class="hook">${p.hook}</p>
+      ${p.colors?`<div class="opt"><div class="lbl"><span class="mono">Color: <b id="cname">${state.color.n}</b></span><span class="mono muted" id="cink">${state.color.ink}</span></div>
+        <div class="swatches" role="group" aria-label="Color">${p.colors.map((c,i)=>`<button type="button" data-c="${i}" aria-pressed="${i===0}"><i style="background:${SW[c.n]}"></i>${c.n}</button>`).join('')}</div></div>`
+       :`<div class="opt"><div class="lbl"><span class="mono">Color: <b>${p.color}</b></span><span class="mono muted">${tok(p.ink)}</span></div></div>`}
+      <div class="opt"><div class="lbl"><span class="mono">Size</span><a href="#size">Size guide</a></div>
+        <div class="sizes" role="group" aria-label="Size">${p.sizes.map(s=>`<button type="button" data-s="${s}" aria-pressed="false">${s}</button>`).join('')}</div>
+        <span class="mono muted">Size run is a placeholder: <span class="tok">confirm from Tapstitch blank</span></span></div>
+      <button class="btn add" type="button" id="add">Select a size</button>
+      <div class="mto"><span class="k">Made to order</span><span>Printed in 2 to 4 business days after you order, then shipped with tracking.</span>
+        ${p.line==='ex'?`<span class="k">Edition</span><span>Limited run of <span class="tok">edition size</span></span><span class="k">Note</span><span><span class="tok">Exclusive fulfillment: made to order or pre-made run, confirm</span></span>`:''}</div>
+      ${p.vary?`<div class="vary"><b>Variance expected.</b> ${VARY}</div>`:''}
+      <div>
+        <details class="acc" open><summary>Description</summary><div class="body"><p style="margin:0">${tok(p.desc)}</p></div></details>
+        <details class="acc"><summary>Print and placement</summary><div class="body">
+          <p style="margin:0 0 10px">${placeTxt} Discharge-style finish, matte, aged crack distress. <span class="tok">fulfilled by Tapstitch (Chris confirmed); verify finish on samples</span></p>
+          <div class="printmap"><figure>${tee(p.place,'front')}<figcaption class="mono muted">Front / ${tok(p.front)}</figcaption></figure><figure>${tee(p.place,'back')}<figcaption class="mono muted">Back / ${tok(p.back)}</figcaption></figure></div>
+        </div></details>
+        <details class="acc"><summary>Specs</summary><div class="body"><ul>
+          <li>Style code: ${p.code} (${p.line==='og'?'OG Drop':'Exclusive'})</li><li>Body: ${p.colors?p.colors.map(c=>c.n).join(', '):p.color}</li>
+          <li>Ink: ${tok(p.ink)}</li><li>Fit: <span class="tok">fit</span></li><li>Fabric: <span class="tok">fabric / GSM from Tapstitch blank</span></li></ul></div></details>
+        <details class="acc"><summary>Care</summary><div class="body"><p style="margin:0">${p.care}</p></div></details>
+        <details class="acc"><summary>Shipping and returns</summary><div class="body"><p style="margin:0">Each piece is printed for your order, so returns cover print defects, damage and wrong items. Hairline cracking and acid-wash variation are part of the design. <a href="#shipping">Full policy</a></p></div></details>
+      </div>
+    </div>
+  </div></section>
+  <section class="related sec" data-shopify="Related products (same collection)"><div class="wrap">
+    <div class="shead"><h2 class="disp" style="font-size:clamp(34px,4.4vw,60px)">More from the ${p.line==='og'?'OG Drop':'Exclusive'}</h2></div>
+    <div class="rail r4">${related.map(x=>card(x)).join('')}</div>
+  </div></section>`;
+  setTimeout(()=>{
+    const gal = document.getElementById('gal');
+    const drawGal = () => {
+      const b = imgBase(), v = state.color || p;
+      const showBack = !v.hideBack && !p.hideBack;
+      const showFront = !p.noFront && !v.hideFront && !p.hideFront;
+      const showDetail = !v.hideDetail && !p.hideDetail;
+      const figs = [];
+      if (showBack) figs.push(`<figure><img src="${IMG(b+'-back')}" alt="${p.name}, back"><figcaption class="mono">Back</figcaption></figure>`);
+      if (showFront) figs.push(`<figure><img src="${IMG(b+'-front')}" alt="${p.name}, front"><figcaption class="mono">Front</figcaption></figure>`);
+      if (showDetail) figs.push(figs.length === 1
+        ? `<figure><img src="${IMG('detail-'+b)}" alt="Print detail" style="object-fit:cover"><figcaption class="mono">Print detail</figcaption></figure>`
+        : `<figure class="wide"><img src="${IMG('detail-'+b)}" alt="Print detail, close up" style="aspect-ratio:16/9"><figcaption class="mono">Print detail</figcaption></figure>`);
+      if (figs.length === 1) figs[0] = figs[0].replace('<figure>', '<figure class="solo">');
+      gal.innerHTML = figs.join('');
+    };
+    drawGal();
+    document.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{
+      state.color=p.colors[+b.dataset.c];
+      document.querySelectorAll('[data-c]').forEach(x=>x.setAttribute('aria-pressed',x===b));
+      document.getElementById('cname').textContent=state.color.n; document.getElementById('cink').textContent=state.color.ink; drawGal();
+    });
+    const add=document.getElementById('add');
+    document.querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>{
+      state.size=b.dataset.s; document.querySelectorAll('[data-s]').forEach(x=>x.setAttribute('aria-pressed',x===b));
+      add.textContent=`Add to bag / ${money(p.price)}`;
+    });
+    add.onclick=()=>{ if(!state.size){toast('Pick a size first');return;}
+      addToBag({h:p.h,name:p.name,color:state.color?state.color.n:p.color,size:state.size,price:p.price,img:imgBase()}); };
+  });
+  return html;
+}
+
+function about(){
+  return `<section class="page sec" data-shopify="Page template: About (image with text + rich text)"><div class="wrap">
+    <p class="mono muted">About</p><h1 class="disp">Gourmet<br>Ratchet</h1>
+    <div class="twocol">
+      <div class="prose">
+        <p style="font-size:21px;line-height:1.4"><span class="tok">brand meaning: wording from Marcos</span> This season runs two marks across eight pieces, every one printed when you order it.</p>
+        <p><span class="tok">2018 origin wording: started in Chicago in August 2018, introduced by Internz University</span></p>
+        <p><span class="tok">ComplexCon 2026 contest name, wording and permission to cite</span></p>
+        <h3>Two marks</h3>
+        <p>The OG Drop carries the block wordmark, two lines stacked tight. The Exclusive puts spray graffiti over copperplate script and runs as a limited drop.</p>
+        <p>Every piece is printed when you order it. <span class="tok">Exclusive fulfillment: confirm</span></p>
+        <p style="margin-top:24px"><a class="btn" href="#og">Shop the OG Drop</a> <a class="btn ghost" href="#exclusive" style="margin-left:6px">Shop the Exclusive</a></p>
+      </div>
+      <div style="display:grid;gap:10px"><img src="${IMG('og-hoodie-charcoal-back')}" alt="OG Hoodie, back"><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><img src="${IMG('print-detail-2')}" alt="Print detail" style="aspect-ratio:1;object-fit:cover"><img src="${IMG('look-og-crew-grey-back')}" alt="OG Crewneck back print" style="aspect-ratio:1;object-fit:cover"></div></div>
+    </div></div></section>${signup()}`;
+}
+
+function shipping(){
+  return `<section class="page sec" data-shopify="Page template: Shipping and Returns (rich text)"><div class="wrap">
+    <p class="mono muted">Help</p><h1 class="disp">Shipping and Returns</h1>
+    <div class="twocol"><div class="prose">
+      <h3>Shipping</h3>
+      <p>Everything in this store is made to order. Your piece gets printed after you check out, which takes 2 to 4 business days, and then it ships. <span class="tok">Exclusive fulfillment: confirm</span> You'll get an email with tracking once it does.</p>
+      <ul><li>Production: 2 to 4 business days</li><li>Transit: <span class="tok">methods and transit times</span></li><li>Rates: shown at checkout, <span class="tok">shipping rates</span></li><li>Where we ship: <span class="tok">regions</span></li><li>Multiple items: <span class="tok">ship together or separately</span></li></ul>
+    </div><div class="prose">
+      <h3>Returns</h3>
+      <p>Each piece is printed for your order, so we don't take returns for a change of mind. If something went wrong on our end, we'll make it right: a print defect, damage before it reached you, or the wrong item, color or size.</p>
+      <p>Email <span class="tok">contact email</span> within <span class="tok">claim window</span> of delivery with your order number and a photo. We'll send <span class="tok">replacement or refund</span>.</p>
+      <p>The hairline cracking in the print and the color variation on acid-wash hoodies are part of the design and don't count as defects.</p>
+      <p><b>Size exchanges:</b> <span class="tok">policy decision</span><br><b>Changing or canceling:</b> <span class="tok">cancellation window</span></p>
+    </div></div></div></section>`;
+}
+
+const FAQ = [
+ ['How does the sizing run?','Fit is {{fit}}. Every product page links to its size chart, measured with the garment laid flat. Measure a piece you already own that fits how you like and compare.'],
+ ['How long until my order ships?','Each piece is printed after you order it. That takes 2 to 4 business days, then transit time depending on where you are and the shipping option you choose. {{Exclusive fulfillment: confirm}}'],
+ ['Can I return something if it doesn\'t fit?','Since everything is printed to order, returns are for defects and wrong items. For sizing, {{size exchange policy}}.'],
+ ['Do you ship internationally?','{{international shipping, regions, duties}}'],
+ ['How should I wash it?','Turn it inside out, wash it cold, and hang dry or tumble dry low. Skip the bleach and keep the iron off the print.'],
+ ['Why does the print look cracked?','It\'s supposed to. The hairline cracking along the fold and wear lines is part of the print design, so every piece shows up already looking worn in.'],
+ ['Why doesn\'t my hoodie look exactly like the photo?','The hoodies are acid washed, so the fade and the shade of charcoal change from one to the next. No two alike.'],
+ ['Will the Exclusive come back?','The Exclusive is a limited drop, {{edition size}}. {{restock or no restock}}. Sign up for drop alerts for first word on what\'s next.'],
+ ['How do I reach you?','Email {{contact email}} with your order number if you have one.'],
+];
+function faq(){
+  return `<section class="page sec" data-shopify="Page template: FAQ (Collapsible content section)"><div class="wrap">
+    <p class="mono muted">Help</p><h1 class="disp">FAQ</h1>
+    <div class="faq" style="max-width:860px">${FAQ.map(([q,a],i)=>`<details ${i===0?'open':''}><summary>${q}</summary><div class="a">${tok(a)}</div></details>`).join('')}</div>
+  </div></section>`;
+}
+function sizeguide(){
+  const row=(s)=>`<tr><td>${s}</td><td><span class="tok">in</span></td><td><span class="tok">in</span></td><td><span class="tok">in</span></td></tr>`;
+  return `<section class="page sec" data-shopify="Page template: Size Guide (rich text + table, one per blank)"><div class="wrap">
+    <p class="mono muted">Help</p><h1 class="disp">Size Guide</h1>
+    <div class="twocol"><div class="prose"><p>Every measurement is taken with the garment laid flat. Chest is measured straight across, armpit to armpit, and length runs from the highest point of the shoulder down to the hem. Lay out a piece you already own that fits how you like, measure it the same way, and match it to the chart.</p><p>The muscle tee has its own chart, since it's cut differently from the tees and fleece.</p><p><span class="tok">charts come from the final Tapstitch blank spec sheets</span></p></div>
+    <div style="display:grid;gap:18px">${['Tee','Muscle Tee','Crewneck and Hoodie'].map(t=>`<div><p class="lab" style="font-size:14px;margin-bottom:8px">${t}</p><div class="tbl"><table><thead><tr><th>Size</th><th>Chest</th><th>Length</th><th>Sleeve</th></tr></thead><tbody>${(t==='Work Jacket'?JSIZES:SIZES).map(row).join('')}</tbody></table></div></div>`).join('')}</div></div>
+  </div></section>`;
+}
+function soon(){
+  return `<div class="soon sec" data-shopify="Password page (store live but locked until drop)"><div class="in">
+    <img class="og" src="img/logo-og-bone.png" alt="Gourmet Ratchet">
+    <img src="img/logo-exclusive-dark.png" alt="" style="width:min(220px,50vw);margin-top:-6px">
+    <p class="mono" style="color:#B9B2A3">New season / OG Drop and Exclusive / <span class="tok">drop date</span></p>
+    <h1 class="disp" style="font-size:clamp(46px,8vw,96px)">Drop alerts first.</h1>
+    <form class="js-sign"><label for="email-soon" style="position:absolute;left:-9999px">Email</label><input id="email-soon" type="email" placeholder="Email address" required><button class="btn cb" type="submit">Put Me On</button></form>
+    <p class="ok mono" hidden>You're on the list. (Prototype: nothing was submitted.)</p>
+    <p class="mono" style="color:#B9B2A3">Instagram @gourmetratchet</p>
+    <a href="#home" class="mono" style="color:#B9B2A3">Back to the storefront design</a>
+  </div></div>`;
+}
+
+/* bag */
+let BAG=[];
+function addToBag(item){BAG.push(item);document.getElementById('bag-n').textContent=BAG.length;openBag();}
+function openBag(){
+  const root=document.getElementById('drawer-root');
+  const total=BAG.reduce((s,i)=>s+i.price,0);
+  root.innerHTML=`<div class="scrim" id="scrim"></div><aside class="drawer sec" data-shopify="Cart drawer" role="dialog" aria-label="Bag">
+    <div class="hd"><span class="lab" style="font-size:16px">Bag (${BAG.length})</span><button type="button" id="closebag">Close</button></div>
+    <div class="items">${BAG.length?BAG.map((i,k)=>`<div class="line"><img src="${IMG(i.img+'-back')}" alt=""><div><b>${i.name}</b><div class="mono muted" style="margin-top:4px">${i.color} / ${i.size}</div><button class="rm" type="button" data-rm="${k}">Remove</button></div><span class="mono">${money(i.price)}</span></div>`).join(''):`<div class="empty"><p class="lab" style="font-size:18px">Your bag is empty.</p><p class="muted">Start with the OG Drop or the Exclusive.</p></div>`}</div>
+    <div class="ft"><div class="tot"><span>Subtotal</span><span>${money(total)}</span></div><p class="mono muted" style="margin:0">Made to order. Shipping and tax at checkout.</p>
+      <button class="btn" type="button" id="checkout" ${BAG.length?'':'disabled style="opacity:.4"'}>Checkout</button></div></aside>`;
+  document.getElementById('scrim').onclick=closeBag; document.getElementById('closebag').onclick=closeBag;
+  root.querySelectorAll('[data-rm]').forEach(b=>b.onclick=()=>{BAG.splice(+b.dataset.rm,1);document.getElementById('bag-n').textContent=BAG.length;openBag();});
+  const co=document.getElementById('checkout'); if(co) co.onclick=()=>toast('Checkout runs on Shopify. Not wired in the prototype.');
+}
+function closeBag(){document.getElementById('drawer-root').innerHTML='';}
+function toast(t){const el=document.createElement('div');el.className='toast';el.textContent=t;document.body.appendChild(el);setTimeout(()=>el.remove(),2200);}
+
+/* router */
+function route(){
+  const r=(location.hash||'#home').slice(1);
+  const view=document.getElementById('view'), chrome=document.getElementById('chrome'), foot=document.getElementById('footwrap');
+  let html;
+  if(r==='soon'){chrome.hidden=true;foot.innerHTML='';view.innerHTML=soon();bindForms();return;}
+  chrome.hidden=false;
+  if(r==='og') html=collection('og');
+  else if(r==='exclusive') html=collection('ex');
+  else if(r.startsWith('p-')) html=pdp(r.slice(2));
+  else if(r==='about') html=about();
+  else if(r==='shipping') html=shipping();
+  else if(r==='faq') html=faq();
+  else if(r==='size') html=sizeguide();
+  else html=home();
+  view.innerHTML=html; foot.innerHTML=footer();
+  document.querySelectorAll('nav.main a').forEach(a=>a.classList.toggle('on',a.dataset.r===r||false));
+  document.getElementById('nav').classList.remove('open');
+  bindForms();
+  document.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{
+    document.querySelectorAll('[data-f]').forEach(x=>x.setAttribute('aria-pressed',x===b));
+    const f=b.dataset.f, list=(r==='exclusive'?EX:OG).filter(p=>f==='All'||p.type===f);
+    document.getElementById('cgrid').innerHTML=list.map(p=>card(p,r==='exclusive')).join('');
+  });
+  window.scrollTo(0,0);
+}
+function bindForms(){document.querySelectorAll('.js-sign').forEach(f=>f.onsubmit=e=>{e.preventDefault();const ok=f.parentElement.querySelector('.ok');if(ok)ok.hidden=false;f.reset();});}
+window.addEventListener('hashchange',route);
+document.getElementById('bag-btn').onclick=openBag;
+document.getElementById('go-soon').onclick=()=>{location.hash='soon';};
+document.getElementById('menu-btn').onclick=e=>{const n=document.getElementById('nav');n.classList.toggle('open');e.currentTarget.setAttribute('aria-expanded',n.classList.contains('open'));};
+document.getElementById('maptoggle').onclick=e=>{const on=document.documentElement.classList.toggle('map');e.currentTarget.setAttribute('aria-pressed',on);e.currentTarget.textContent=on?'Hide Shopify sections':'Show Shopify sections';};
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeBag();});
+route();
+</script>
+
+</html>
