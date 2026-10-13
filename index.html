@@ -302,7 +302,6 @@ const CARE_JKT = 'Button it up, turn it inside out and wash cold on gentle, then
 const VARY = 'Every hoodie is acid washed, so the fade, the mottling and the exact shade of charcoal shift from piece to piece. No two alike.';
 const SW = {Black:'#1c1c1d','Deep Navy':'#1f2a44',Grey:'#9a968f',Bone:'#e8e1cf','Faded Grey':'#a49f98','Washed Charcoal':'#4b4a4c','Natural Canvas':'#e6dcc6'};
 
-/* PLACEHOLDER retail prices for layout only. Owner: Marcos and Chris. */
 const P = [
  {h:'og-tee-black',line:'og',type:'Tees',name:'OG Tee',color:'Black',code:'GR-TE-01',price:45,img:'og-tee-black',place:'tee',sizes:SIZES,
   hook:'Bone ink on black, small on the chest and big across the back.',
@@ -650,7 +649,6 @@ window.addEventListener('hashchange',route);
 document.getElementById('bag-btn').onclick=openBag;
 document.getElementById('go-soon').onclick=()=>{location.hash='soon';};
 document.getElementById('menu-btn').onclick=e=>{const n=document.getElementById('nav');n.classList.toggle('open');e.currentTarget.setAttribute('aria-expanded',n.classList.contains('open'));};
-void e=>{const on=document.documentElement.classList.toggle('map');e.currentTarget.setAttribute('aria-pressed',on);e.currentTarget.textContent=on?'Hide Shopify sections':'Show Shopify sections';};
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeBag();});
 route();
 </script>
