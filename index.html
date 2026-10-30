@@ -13,7 +13,6 @@
   --ink-2:#4A453D;     /* secondary text, warm grey toward the bone */
   --rule:#CFC6B2;      /* hairlines */
   --cobalt:#2B4CF1;    /* Exclusive accent, sampled from the tech pack */
-  --navy:#1F2A44;
   --display:"Archivo","Arial Narrow",Impact,sans-serif;
   --body:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
@@ -305,42 +304,38 @@ const CARE_TOP = 'Turn it inside out and wash cold with like colors, then hang d
 const CARE_HOOD = 'Turn it inside out and wash cold with darks for the first few washes, then hang dry or tumble dry low. Skip the bleach and keep the iron off the print.';
 const CARE_JKT = 'Button it up, turn it inside out and wash cold on gentle, then hang it to dry. Spot clean between washes since natural canvas shows marks, and keep bleach and the iron away from the print.';
 const VARY = 'Every hoodie is acid washed, so the fade, the mottling and the exact shade of charcoal shift from piece to piece. No two alike.';
-const SW = {Black:'#1c1c1d','Deep Navy':'#1f2a44',Grey:'#9a968f',Bone:'#e8e1cf','Faded Grey':'#a49f98','Washed Charcoal':'#4b4a4c','Natural Canvas':'#e6dcc6'};
+const SW = {Black:'#1c1c1d',Grey:'#9a968f',Bone:'#e8e1cf','Faded Grey':'#a49f98','Washed Charcoal':'#4b4a4c','Natural Canvas':'#e6dcc6'};
 
 const P = [
  {h:'og-tee-black',line:'og',type:'Tees',name:'OG Tee',color:'Black',code:'GR-TE-01',price:55,img:'og-tee-black',place:'tee',sizes:SIZES,
   hook:'Bone ink on black, small on the chest and big across the back.',
-  desc:'The Gourmet Ratchet block wordmark in bone on a black tee, stacked on two lines the way it always sits. There\'s a small hit on the wearer\'s left chest and a full hit across the back, and the print is matte with hairline cracks along the fold and wear lines, so it looks lived in from the first wear.',
-  ink:'Bone',front:'Left-chest hit, wearer\'s left',back:'Full hit, centered',care:CARE_TOP,detail:1},
+  desc:'The Gourmet Ratchet block wordmark in bone on a black tee, stacked on two lines the way it always sits. There\'s a centered hit on the chest and a full hit across the back, and the print is matte with hairline cracks along the fold and wear lines, so it looks lived in from the first wear.',
+  ink:'Bone',front:'Centered chest hit',back:'Full hit, centered',care:CARE_TOP,detail:1},
  {h:'og-muscle-black',line:'og',type:'Muscle tees',name:'OG Muscle Tee',color:'Black',code:'GR-MT-01',price:50,img:'og-muscle-black',place:'muscle',sizes:SIZES,
   hook:'Sleeves off, with the mark sitting right in the middle.',
   desc:'Same block wordmark as the tee, placed differently. On the black muscle tee both hits are centered, a chest hit in the middle of the front and a full hit on the back that sits lower on the panel than anything else in the drop. The ink is bone and matte, with a worn-in crackle running through the letters.',
   ink:'Bone',front:'Centered chest hit',back:'Centered full hit, set lower',care:CARE_TOP,detail:1},
  {h:'og-crew-grey',line:'og',type:'Crewnecks',name:'OG Crewneck',color:'Faded Grey',code:'GR-CN-01',price:95,img:'og-crew-grey',place:'tee',sizes:SIZES,
   hook:'A faded gray crew with the wordmark on the front and the back.',
-  desc:'A faded gray crewneck carrying the Gourmet Ratchet block wordmark, two lines stacked tight and never stretched out. There\'s a small hit on the wearer\'s left chest and a full hit across the back, and the print comes matte and already aged, with fine cracking along the fold lines.',
-  ink:'Black front, bone back',front:'Left-chest hit, wearer\'s left',back:'Full hit, centered',care:CARE_TOP,detail:2},
+  desc:'A faded gray crewneck carrying the Gourmet Ratchet block wordmark, two lines stacked tight and never stretched out. There\'s a centered hit on the chest and a full hit across the back, and the print comes matte and already aged, with fine cracking along the fold lines.',
+  ink:'Black front, bone back',front:'Centered chest hit',back:'Full hit, centered',care:CARE_TOP,detail:2},
  {h:'og-hoodie-charcoal',line:'og',type:'Hoodies',name:'OG Hoodie',color:'Washed Charcoal',code:'GR-HD-01',price:150,img:'og-hoodie-charcoal',place:'tee',sizes:SIZES,vary:true,
   hook:'Acid-washed charcoal, so yours won\'t look like anybody else\'s.',
-  desc:'Washed charcoal hoodie with the block wordmark in bone, small on the left chest and full across the back. The acid wash leaves the body mottled and faded, and the print goes with it, matte with cracks along the fold and wear lines, so it shows up looking like it\'s been in your rotation for a couple of years.',
-  ink:'Bone',front:'Left-chest hit, wearer\'s left',back:'Full hit, centered',care:CARE_HOOD,detail:2},
+  desc:'Washed charcoal hoodie with the block wordmark in bone, centered on the chest and full across the back. The acid wash leaves the body mottled and faded, and the print goes with it, matte with cracks along the fold and wear lines, so it shows up looking like it\'s been in your rotation for a couple of years.',
+  ink:'Bone',front:'Centered chest hit',back:'Full hit, centered',care:CARE_HOOD,detail:2},
  {h:'ex-tee',line:'ex',type:'Tees',name:'Exclusive Tee',color:'4 colors',code:'GR-TE-01',price:65,img:'ex-tee-black',place:'tee',sizes:SIZES,
-  colors:[{n:'Black',img:'ex-tee-black',ink:'Bone graffiti, cobalt script'},{n:'Deep Navy',img:'ex-tee-navy',ink:'All bone'},{n:'Grey',img:'ex-tee-grey',ink:'Black graffiti, cobalt script'},{n:'Bone',img:'ex-tee-bone',ink:'Black graffiti, cobalt script'}],
-  hook:'Spray graffiti over copperplate script, in four colorways, limited.',
-  desc:'The Exclusive mark: "Gourmet" in spray graffiti with the drips left in, over "Ratchet" in copperplate script, with three sparkle stars around it. There\'s a small hit on the left chest and a full hit across the back. The ink changes with the body, bone graffiti and cobalt script on Black, black graffiti and cobalt script on Grey and Bone, and all bone on Deep Navy, and every one of them is matte with hairline cracking.',
-  ink:'Changes by color',front:'Left-chest hit, wearer\'s left',back:'Full hit, centered',care:CARE_TOP,detail:1},
- {h:'ex-muscle-navy',line:'ex',type:'Muscle tees',name:'Exclusive Muscle Tee',color:'Deep Navy',code:'GR-MT-01',price:60,img:'ex-muscle-navy',place:'muscle',sizes:SIZES,hideFront:true,
-  hook:'All bone on deep navy, with both hits centered.',
-  desc:'The Exclusive mark on a deep navy muscle tee: graffiti "Gourmet" over copperplate "Ratchet" and three sparkle stars, every bit of it in bone, because cobalt gets lost on navy. Both hits are centered like the OG muscle tee, with the back hit sitting lower on the panel, and the print is matte with an aged crack running through it.',
-  ink:'All bone',front:'Centered chest hit',back:'Centered full hit, set lower',care:CARE_TOP,detail:1},
+  colors:[{n:'Black',img:'ex-tee-black',ink:'Bone graffiti, cobalt script'},{n:'Grey',img:'ex-tee-grey',ink:'Black graffiti, cobalt script'},{n:'Bone',img:'ex-tee-bone',ink:'Black graffiti, cobalt script'}],
+  hook:'Spray graffiti over copperplate script, in three colorways, limited.',
+  desc:'The Exclusive mark: "Gourmet" in spray graffiti with the drips left in, over "Ratchet" in copperplate script, with three sparkle stars around it. There\'s a centered hit on the chest and a full hit across the back. The ink changes with the body, bone graffiti and cobalt script on Black, and black graffiti and cobalt script on Grey and Bone, and every one of them is matte with hairline cracking.',
+  ink:'Changes by color',front:'Centered chest hit',back:'Full hit, centered',care:CARE_TOP,detail:1},
  {h:'ex-crew-grey',line:'ex',type:'Crewnecks',name:'Exclusive Crewneck',color:'Faded Grey',code:'GR-CN-01',price:110,img:'ex-crew-grey',place:'tee',sizes:SIZES,
   hook:'Black graffiti and cobalt script on a faded gray crew.',
-  desc:'Faded gray crewneck with the Exclusive mark: black spray graffiti with the drips still running, cobalt copperplate script underneath, and three sparkle stars around the script. It takes a left-chest hit on the front and a full hit across the back, and both inks come out matte with cracking along the fold lines, cobalt included.',
-  ink:'Black graffiti, cobalt script',front:'Left-chest hit, wearer\'s left',back:'Full hit, centered',care:CARE_TOP,detail:2},
+  desc:'Faded gray crewneck with the Exclusive mark: black spray graffiti with the drips still running, cobalt copperplate script underneath, and three sparkle stars around the script. It takes a centered chest hit on the front and a full hit across the back, and both inks come out matte with cracking along the fold lines, cobalt included.',
+  ink:'Black graffiti, cobalt script',front:'Centered chest hit',back:'Full hit, centered',care:CARE_TOP,detail:2},
  {h:'ex-hoodie-charcoal',line:'ex',type:'Hoodies',name:'Exclusive Hoodie',color:'Washed Charcoal',code:'GR-HD-01',price:165,img:'ex-hoodie-charcoal',place:'tee',sizes:SIZES,vary:true,
   hook:'Bone graffiti and cobalt script on acid-washed charcoal.',
-  desc:'Washed charcoal hoodie with the Exclusive mark in two inks, bone spray graffiti on top and cobalt copperplate script underneath with three sparkle stars, small on the left chest and full across the back. The cobalt cracks along the fold lines the same way the bone does, so the color looks like it aged right along with the acid wash.',
-  ink:'Bone graffiti, cobalt script',front:'Left-chest hit, wearer\'s left',back:'Full hit, centered',care:CARE_HOOD,detail:2},
+  desc:'Washed charcoal hoodie with the Exclusive mark in two inks, bone spray graffiti on top and cobalt copperplate script underneath with three sparkle stars, centered on the chest and full across the back. The cobalt cracks along the fold lines the same way the bone does, so the color looks like it aged right along with the acid wash.',
+  ink:'Bone graffiti, cobalt script',front:'Centered chest hit',back:'Full hit, centered',care:CARE_HOOD,detail:2},
 ];
 const byH = Object.fromEntries(P.map(p=>[p.h,p]));
 const OG = P.filter(p=>p.line==='og'), EX = P.filter(p=>p.line==='ex');
@@ -391,11 +386,11 @@ function home(){
     <div>
       <p class="mono muted">The new season</p>
       <h2 class="disp" style="margin-top:14px">Matte print. Cracked on purpose.</h2>
-      <p class="muted">Two marks, eight pieces, and every one gets printed when you order it. The finish is matte, with hairline cracks along the fold and wear lines.</p>
+      <p class="muted">Two marks, seven pieces, and every one gets printed when you order it. The finish is matte, with hairline cracks along the fold and wear lines.</p>
       <div class="specline mono muted"><span>Bone ink on dark bodies</span><span>Black ink on gray and bone</span><span>Cobalt on the Exclusive</span></div>
     </div>
     <div class="details">
-      <figure><img src="${IMG('print-detail-1')}" alt="Bone graffiti and script on navy, close up" loading="lazy"><figcaption class="mono muted">Bone on navy</figcaption></figure>
+      <figure><img src="${IMG('detail-ex-tee-black')}" alt="Exclusive mark in bone and cobalt on black, close up" loading="lazy"><figcaption class="mono muted">Exclusive on black</figcaption></figure>
       <figure><img src="${IMG('print-detail-2')}" alt="Cobalt script cracking on charcoal, close up" loading="lazy"><figcaption class="mono muted">Cobalt on charcoal</figcaption></figure>
       <figure><img src="${IMG('detail-og-tee-black')}" alt="OG wordmark in bone on black, close up" loading="lazy"><figcaption class="mono muted">OG on black</figcaption></figure>
     </div>
@@ -421,7 +416,7 @@ function collection(line){
   const ex = line==='ex', list = ex?EX:OG;
   const types = ['All',...new Set(list.map(p=>p.type))];
   const intro = ex
-    ? 'The Exclusive puts "Gourmet" in spray graffiti, drips and all, over "Ratchet" in copperplate script, with exactly three sparkle stars. Cobalt shows up wherever the body can carry it, and the navy pieces go all bone.'
+    ? 'The Exclusive puts "Gourmet" in spray graffiti, drips and all, over "Ratchet" in copperplate script, with exactly three sparkle stars. Cobalt shows up wherever the body can carry it.'
     : 'The OG Drop runs the main Gourmet Ratchet wordmark, two lines, stacked flush, never stretched. Four pieces: a tee, a muscle tee, a faded gray crew and an acid-washed charcoal hoodie. Every piece is printed when you order it.';
   return `<div class="${ex?'dark ex-page':''}">
   <section class="colhead sec" data-shopify="Collection banner" style="${ex?'border-color:var(--bone)':''}"><div class="wrap">
@@ -443,8 +438,8 @@ function tee(kind,side){
   const bx = kind==='muscle'?44:48, bw = kind==='muscle'?112:104, top=4, len=208;
   let r;
   if(side==='front'){
-    const w=bw*.24, h=w*.44, y=top+len*.32;
-    const x = kind==='muscle' ? 100-w/2 : 100+6;
+    const w=bw*(kind==='muscle'?.24:.26), h=w*.44, y=top+len*(kind==='muscle'?.32:.22);
+    const x = 100-w/2;
     r={x,y,w,h};
   } else {
     const w=bw*.46, h=w*.44, y= top+len*(kind==='muscle'?.30:.20);
@@ -465,7 +460,7 @@ function pdp(h){
   const related = (p.line==='og'?OG:EX).filter(x=>x.h!==p.h).slice(0,4);
   const placeTxt = p.place==='muscle'
     ? 'Front: centered chest hit, 24% of body width. Back: centered full hit, 46% of body width, set lower on the back panel.'
-    : 'Front: chest hit at 24% of body width, wearer\'s left, top 32% down. Back: full hit at 46% of body width, centered, top 20% down.';
+    : 'Front: centered chest hit. Back: full hit at 46% of body width, centered, top 20% down.';
   const html = `
   <section class="sec" data-shopify="Main product (gallery left, buy box right)"><div class="wrap pdp">
     <div class="mhead"><div class="crumb mono muted"><a href="#${p.line==='og'?'og':'exclusive'}">${p.line==='og'?'OG Drop':'Exclusive'}</a><span>/</span><span>${p.code}</span></div><h1 class="disp" style="font-size:44px">${p.name}</h1><div class="price"><span>${money(p.price)}</span></div></div>
@@ -541,7 +536,7 @@ function about(){
     <div class="twocol">
       <div class="prose">
         <p style="font-size:21px;line-height:1.4">Imperfect but excellent.</p>
-        <p>This season runs two marks across eight pieces, every one printed when you order it.</p>
+        <p>This season runs two marks across seven pieces, every one printed when you order it.</p>
         <h3>Two marks</h3>
         <p>The OG Drop carries the block wordmark, two lines stacked tight. The Exclusive puts spray graffiti over copperplate script and runs as a limited drop.</p>
         <p>Every piece is printed when you order it.</p>
